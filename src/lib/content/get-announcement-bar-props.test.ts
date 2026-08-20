@@ -13,6 +13,7 @@ const baseContent: StorefrontContent = {
 			href: "/collections/sale",
 			linkLabel: "Shop sale",
 			dismissible: true,
+			backendValues: false,
 		},
 	},
 };
