@@ -89,4 +89,14 @@
 	html[data-typography="editorial"] .text-h3 {
 		font-weight: 500;
 	}
+	.pattern-overlay-light {
+		background-image: url("/brand-pattern-09.svg");
+		background-size: 300px;
+		background-repeat: repeat;
+	}
+	.pattern-overlay-dark {
+		background-image: url("/brand-pattern-01.svg");
+		background-size: 300px;
+		background-repeat: repeat;
+	}
 }

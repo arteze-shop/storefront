@@ -1,13 +1,21 @@
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import { Fraunces } from "next/font/google";
+// import { GeistSans } from "geist/font/sans";
+// import { GeistMono } from "geist/font/mono";
+import { Fraunces, Epilogue } from "next/font/google";
 import { isEditorialTypography } from "@/config/typography-theme";
 import { cn } from "@/lib/utils";
 
 /** Fraunces for Direction A — must be initialized unconditionally (Next.js font loader rule). */
 const frauncesDisplay = Fraunces({
 	subsets: ["latin"],
+	axes: ["opsz", "SOFT", "WONK"],
 	variable: "--font-fraunces",
+	display: "swap",
+	adjustFontFallback: true,
+});
+
+const epilogueDisplay = Epilogue({
+	subsets: ["latin"],
+	variable: "--font-epilogue",
 	display: "swap",
 	adjustFontFallback: true,
 });
@@ -26,7 +34,7 @@ export function getRootHtmlFontProps(htmlLang: string): RootHtmlFontProps {
 
 	return {
 		lang: htmlLang,
-		className: cn(GeistSans.variable, GeistMono.variable, editorial && frauncesDisplay.variable, "min-h-dvh"),
+		className: cn(epilogueDisplay.variable, editorial && frauncesDisplay.variable, "min-h-dvh"),
 		suppressHydrationWarning: true,
 		...(editorial ? { "data-typography": "editorial" as const } : {}),
 	};

@@ -26,36 +26,51 @@
 	 * a Tailwind utility (`text-foreground`) over inline `var()`.
 	 *
 	 * Cool, neutral palette: crisp near-white page with soft grey panels. */
-	--background: 0.99 0 0; /* Page background - crisp near-white */
+	/* --background: 0.99 0 0; */ /* Page background - crisp near-white */
+	--background: 0.976 0.0123 91.52; /* Page background - crisp near-white */
 	--card: 1 0 0; /* Cards, dropdowns, modals */
 	--popover: 1 0 0;
-	--secondary: 0.965 0 0; /* Soft grey panels (hero/editorial image tiles) */
-	--muted: 0.95 0 0;
-	--accent: 0.95 0 0;
+	/* --secondary: 0.965 0 0; Soft grey panels (hero/editorial image tiles) */
+	--secondary: 0.951 0.0609 105.48; /* Soft grey panels (hero/editorial image tiles) */
+	/* --muted: 0.95 0 0; */
+	--muted: 0.9528 0.0209 88.72;
+	/* --accent: 0.95 0 0; */
+	--accent: 0.8377 0.0747 5.12;
 
 	/* --- Foregrounds (text on light surfaces) --- */
-	--foreground: 0.12 0 0;
-	--card-foreground: 0.12 0 0;
-	--popover-foreground: 0.12 0 0;
-	--secondary-foreground: 0.12 0 0;
-	--muted-foreground: 0.45 0 0;
+	/* --foreground: 0.12 0 0; */
+	--foreground: 0.234 0.0357 42.46;
+	/* --card-foreground: 0.12 0 0; */
+	--card-foreground: 0.234 0.0357 42.46;
+	/* --popover-foreground: 0.12 0 0; */
+	--popover-foreground: 0.234 0.0357 42.46;
+	/* --secondary-foreground: 0.12 0 0; */
+	/* --secondary-foreground: 0.3957 0.1265 5.23; */
+	--secondary-foreground: 0.3674 0.1117 10.29;
+	/* --muted-foreground: 0.45 0 0; */
+	--muted-foreground: 0.5707 0.0526 72.67;
 	--accent-foreground: 0.12 0 0;
 
 	/* --- Primary (CTAs, key actions) --- */
-	--primary: 0.12 0 0;
+	/* --primary: 0.12 0 0; */
+	--primary: 0.6227 0.1914 30.08;
 	--primary-foreground: 0.98 0 0;
 
 	/* --- Semantic --- */
-	--destructive: 0.55 0.2 25;
+	/* --destructive: 0.55 0.2 25; */
+	--destructive: 0.558 0.2137 19.4;
 	--destructive-foreground: 0.98 0 0;
 	--success: 0.55 0.15 145;
 	--success-foreground: 0.98 0 0;
 	--bestseller: 0.56 0.084 68; /* Bronze outline (~#8B6B3D) — bestseller badge */
 
 	/* --- Interactive --- */
-	--border: 0.915 0 0;
-	--input: 0.915 0 0;
-	--ring: 0.12 0 0;
+	/* --border: 0.915 0 0; */
+	--border: 0.3957 0.1265 5.23; /* 14% / 0.14 */
+	/* --input: 0.915 0 0; */
+	--input: transparent;
+	--input-background: 0.9528 0.0209 88.72;
+	--ring: 0.6227 0.1914 30.08;
 
 	/* --- Inverse surfaces (dark bands: bg-foreground text-background) --- */
 	--inverse: 0.82 0 0;
@@ -76,6 +91,9 @@
 	--text-h2: clamp(1.5rem, 1.25rem + 1.2vw, 2.25rem); /* 24 → 36px */
 	--text-h3: clamp(1.125rem, 1.05rem + 0.4vw, 1.5rem); /* 18 → 24px */
 	--text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); /* 17 → 20px */
+	--text-body: clamp(1rem, 0.929rem + 0.36vw, 1.125rem); /* 16 → 18px */
+	--text-small: clamp(0.875rem, 0.804rem + 0.36vw, 1rem); /* 14 → 16px */
+	/* --text-lead: clamp(1rem, 1rem + 0.25vw, 1.1rem); 17 → 20px */
 	--text-eyebrow: 0.75rem; /* 12px fixed — overlines, brand labels */
 
 	/* --- Layout / shape ---
