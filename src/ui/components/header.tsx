@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
-import { getNavbarMenuItems } from "@/lib/menus/get-menu-data";
-import { serializeMenuForNav } from "@/lib/menus/serialize-menu-for-nav";
+// import { getNavbarMenuItems } from "@/lib/menus/get-menu-data";
+// import { serializeMenuForNav } from "@/lib/menus/serialize-menu-for-nav";
 import { getStorefrontContent } from "@/lib/content/server";
 import { Logo } from "./logo";
 import { NavLinksDesktop } from "./nav/components/nav-links-desktop";
@@ -12,8 +12,13 @@ import { MobileMenu } from "./nav/components/mobile-menu";
 import { SearchBar } from "./nav/components/search-bar";
 
 export async function Header({ locale, channel }: { locale: string; channel: string }) {
-	const [navItems, content, tSearchBar, tNavHeader] = await Promise.all([
-		getNavbarMenuItems(channel, locale).then((items) => serializeMenuForNav(items ?? [])),
+	const [
+		// navItems,
+		content,
+		tSearchBar,
+		tNavHeader,
+	] = await Promise.all([
+		// getNavbarMenuItems(channel, locale).then((items) => serializeMenuForNav(items ?? [])),
 		getStorefrontContent(channel, locale),
 		getTranslations({ locale, namespace: "search.bar" }),
 		getTranslations({ locale, namespace: "nav.header" }),
@@ -23,7 +28,7 @@ export async function Header({ locale, channel }: { locale: string; channel: str
 	return (
 		<header
 			id="storefront-header"
-			className="relative sticky top-0 z-40 border-b border-border bg-background"
+			className="relative sticky top-0 z-40 border-b border-secondary-foreground/30 bg-background"
 		>
 			<div className="container-nav">
 				<div className="flex h-16 items-center justify-between gap-4">
@@ -33,7 +38,7 @@ export async function Header({ locale, channel }: { locale: string; channel: str
 						className="hidden flex-1 justify-center lg:ml-10 lg:flex xl:ml-14"
 						aria-label={tNavHeader("mainAriaLabel")}
 					>
-						<NavLinksDesktop items={navItems} nav={nav} />
+						<NavLinksDesktop items={nav.items ?? []} nav={nav} />
 					</nav>
 
 					<div className="hidden md:flex md:max-w-md md:flex-1 md:justify-end lg:flex-none">
@@ -52,7 +57,7 @@ export async function Header({ locale, channel }: { locale: string; channel: str
 						</Suspense>
 						<Suspense>
 							<MobileMenu>
-								<MobileNavLinks items={navItems} nav={nav} />
+								<MobileNavLinks items={nav.items ?? []} nav={nav} />
 								<li className="py-3">
 									<SearchBar
 										locale={locale}

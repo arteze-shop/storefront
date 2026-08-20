@@ -52,7 +52,7 @@ function MegaMenuColumn({ item }: { item: NavMenuItem }) {
 }
 
 const megaMenuTriggerClassName =
-	"inline-flex items-baseline justify-start h-auto rounded-none border-b-2 border-transparent bg-transparent px-0 py-1 text-sm font-medium text-muted-foreground no-underline hover:bg-transparent hover:text-foreground focus:bg-transparent data-[state=open]:border-foreground data-[state=open]:bg-transparent data-[state=open]:text-foreground";
+	"inline-flex items-baseline justify-start h-auto rounded-none border-b-2 border-transparent bg-transparent px-0 py-1 text-sm font-medium text-muted-foreground no-underline hover:bg-transparent hover:text-secondary-foreground focus:bg-transparent data-[state=open]:border-secondary-foreground data-[state=open]:bg-transparent data-[state=open]:text-secondary-foreground";
 
 const megaMenuDropdownTriggerClassName = cn(
 	megaMenuTriggerClassName,
@@ -98,7 +98,7 @@ function MegaMenuTriggerLabel({ item, onClose }: { item: NavMenuItem; onClose: (
 		<span
 			role="link"
 			tabIndex={0}
-			className="cursor-pointer hover:text-foreground"
+			className="cursor-pointer hover:text-secondary-foreground"
 			onPointerDown={(event) => {
 				// On touch, let the trigger open the mega menu instead of navigating.
 				if (isMousePointer(event)) {
@@ -153,7 +153,7 @@ function MegaMenuPanel({
 								<LinkWithChannel
 									href={item.href}
 									prefetch={false}
-									className="text-sm font-medium text-foreground transition-colors hover:text-foreground/80"
+									className="text-sm font-medium text-foreground transition-colors hover:text-secondary-foreground/80"
 									onClick={onClose}
 								>
 									{formatContentLabel(nav.viewAllLabel, { label: item.label })}
@@ -190,7 +190,10 @@ function MegaMenuTopItem({
 		return (
 			<NavigationMenuItem value={item.id}>
 				<NavigationMenuTrigger
-					className={cn(megaMenuDropdownTriggerClassName, isActive && "border-foreground text-foreground")}
+					className={cn(
+						megaMenuDropdownTriggerClassName,
+						isActive && "border-secondary-foreground text-secondary-foreground",
+					)}
 				>
 					{item.href ? <MegaMenuTriggerLabel item={item} onClose={onClose} /> : item.label}
 				</NavigationMenuTrigger>
@@ -206,7 +209,10 @@ function MegaMenuTopItem({
 	}
 
 	const isActive = !isExternalNavHref(item.href) && pathname === item.href;
-	const linkClassName = cn(megaMenuTriggerClassName, isActive && "border-foreground text-foreground");
+	const linkClassName = cn(
+		megaMenuTriggerClassName,
+		isActive && "border-secondary-foreground text-secondary-foreground",
+	);
 
 	if (isExternalNavHref(item.href)) {
 		return (
@@ -278,7 +284,7 @@ function MegaMenuDesktopMenu({
 
 	const allProductsClassName = cn(
 		megaMenuTriggerClassName,
-		pathname === "/products" && "border-foreground text-foreground",
+		pathname === "/products" && "border-secondary-foreground text-secondary-foreground",
 	);
 
 	return (
