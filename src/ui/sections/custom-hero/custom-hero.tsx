@@ -91,23 +91,20 @@ export function CustomHero({
 			{/* Hero Content */}
 			<div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-24 sm:px-6 md:grid-cols-2">
 				<div>
-					<p
-						className="mb-4 text-xs uppercase tracking-[0.2em]"
-						style={{ color: "oklch(var(--hero-accent))" }}
-					>
+					<p className="mb-4 text-xs uppercase tracking-[0.2em] text-primary">
 						Handmade • Artisan • Sustainable
 					</p>
 					<h1 className="mb-6 text-display" style={{ color: "oklch(var(--hero-ink))" }}>
 						Home goods made
 						<br />
-						<em style={{ color: "oklch(var(--hero-accent))" }}>by hand,</em>
+						<em className="text-primary">by hand,</em>
 						<br />
 						with heart.
 					</h1>
 					{subheading ? (
 						<p
-							className="mb-8 max-w-md text-base leading-relaxed"
-							style={{ color: "oklch(var(--hero-taupe))" }}
+							className="mb-8 max-w-md text-base leading-relaxed text-muted-foreground"
+							// style={{ color: "oklch(var(--hero-taupe))" }}
 						>
 							{subheading}
 						</p>
