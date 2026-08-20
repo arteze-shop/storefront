@@ -1,5 +1,10 @@
 import type { PartialStorefrontContent } from "@/lib/content/saleor/types";
-import type { StorefrontContent } from "@/lib/content/types";
+import type {
+	AboutPageValuesContent,
+	ContactContentByChannel,
+	HomepageEditorialContent,
+	StorefrontContent,
+} from "@/lib/content/types";
 
 /** Keep base array when override is missing or empty (unset Saleor list fields). */
 function coalesceArray<T>(override: readonly T[] | undefined, base: readonly T[]): readonly T[] {
@@ -73,14 +78,41 @@ export function mergeStorefrontContent(
 						base.surfaces.homepage.values.columns,
 					),
 				},
-				editorial: {
-					...base.surfaces.homepage.editorial,
-					...override.surfaces?.homepage?.editorial,
-					paragraphs: coalesceArray(
-						override.surfaces?.homepage?.editorial?.paragraphs,
-						base.surfaces.homepage.editorial.paragraphs,
-					),
+				newsletter: {
+					...base.surfaces.homepage.newsletter,
+					...override.surfaces?.homepage?.newsletter,
 				},
+				// `editorial` is optional in HomepageContent — only emit it when base or
+				// override provides one. The base entry (when present) supplies the required
+				// fields; the override is a DeepPartial, so we assert the merged shape.
+				...(base.surfaces.homepage.editorial || override.surfaces?.homepage?.editorial
+					? {
+							editorial: {
+								...base.surfaces.homepage.editorial,
+								...override.surfaces?.homepage?.editorial,
+								paragraphs: coalesceArray(
+									override.surfaces?.homepage?.editorial?.paragraphs,
+									base.surfaces.homepage.editorial?.paragraphs ?? [],
+								),
+							} as HomepageEditorialContent,
+						}
+					: {}),
+			},
+			aboutpage: {
+				...base.surfaces.aboutpage,
+				...override.surfaces?.aboutpage,
+				hero: { ...base.surfaces.aboutpage.hero, ...override.surfaces?.aboutpage?.hero },
+				vision: {
+					...base.surfaces.aboutpage.vision,
+					...override.surfaces?.aboutpage?.vision,
+					content:
+						(override.surfaces?.aboutpage?.vision?.content as string[] | undefined) ??
+						base.surfaces.aboutpage.vision.content,
+				},
+				values:
+					(override.surfaces?.aboutpage?.values as AboutPageValuesContent[] | undefined) ??
+					base.surfaces.aboutpage.values,
+				explore: { ...base.surfaces.aboutpage.explore, ...override.surfaces?.aboutpage?.explore },
 			},
 			products: {
 				...base.surfaces.products,
@@ -108,6 +140,12 @@ export function mergeStorefrontContent(
 					...base.surfaces.checkout.trust,
 					...override.surfaces?.checkout?.trust,
 				},
+			},
+			// Channel-keyed contact entries are complete objects in code defaults; the
+			// Saleor override (DeepPartial) is spread on top of the full base map.
+			contact: {
+				...base.surfaces.contact,
+				...(override.surfaces?.contact as ContactContentByChannel | undefined),
 			},
 		},
 	};

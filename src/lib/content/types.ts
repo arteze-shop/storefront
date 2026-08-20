@@ -1,3 +1,6 @@
+import { type NavMenuItem } from "@/lib/menus/serialize-menu-for-nav";
+import { LucideIcon } from "lucide-react";
+
 /** Normalized storefront marketing copy — provider-agnostic contract (v1). */
 export const STOREFRONT_CONTENT_VERSION = 1 as const;
 
@@ -38,6 +41,7 @@ export type AnnouncementBarContent = {
 	href: string | null;
 	linkLabel: string | null;
 	dismissible: boolean;
+	backendValues: boolean;
 };
 
 export type HomepageHeroContent = {
@@ -46,31 +50,43 @@ export type HomepageHeroContent = {
 	heading: string;
 	subheading: string;
 	primaryCtaLabel: string;
+	secondaryCtaLabel?: string;
 	/** Set only when Saleor storefront-homepage model provides hero-image (FILE). */
 	backgroundImage?: string | null;
 };
 
 export type HomepageFeaturedCollectionContent = {
+	eyebrow?: string;
 	heading: string;
 	/** Saleor collection slug for the product grid (Dashboard: Featured collection reference). */
 	collectionSlug: string;
 	limit: number;
 };
 
+export type HomepageStoryContent = {
+	eyebrow?: string;
+	primaryCtaLabel: string;
+	image?: string;
+};
+
 export type HomepageBrandStoryContent = {
+	eyebrow?: string;
 	heading: string;
 	paragraphs: readonly string[];
+	primaryCtaLabel: string;
+	image?: string;
 };
 
 export type HomepageColumnContent = {
 	title: string;
 	text: string;
+	icon?: LucideIcon;
 };
 
 export type HomepageValuesContent = {
-	heading: string;
+	heading?: string;
 	columns: readonly HomepageColumnContent[];
-	columnsDesktop: 2 | 3;
+	columnsDesktop?: 2 | 3 | 4;
 };
 
 export type HomepageEditorialContent = {
@@ -81,6 +97,12 @@ export type HomepageEditorialContent = {
 	/** Editorial image URL; falls back to the brand placeholder when unset. */
 	image?: string | null;
 	imageAlt?: string;
+};
+
+export type HomepageNewsletterContent = {
+	eyebrow?: string;
+	heading: string;
+	paragraph: string;
 };
 
 /**
@@ -105,7 +127,43 @@ export type HomepageContent = {
 	photoCredits: readonly HomepagePhotoCredit[];
 	brandStory: HomepageBrandStoryContent;
 	values: HomepageValuesContent;
-	editorial: HomepageEditorialContent;
+	editorial?: HomepageEditorialContent;
+	newsletter: HomepageNewsletterContent;
+};
+
+export type AboutPageHeroContent = {
+	image?: string;
+	imageAlt?: string;
+	heading: string;
+	subheading?: string;
+};
+
+export type AboutPageVisionContent = {
+	eyebrow?: string;
+	heading: string;
+	content: string[];
+	image: string;
+	imageAlt?: string;
+};
+
+export type AboutPageValuesContent = {
+	id: string;
+	heading: string;
+	description: string;
+};
+
+export type AboutPageExploreContent = {
+	logo?: string;
+	heading: string;
+	content: string;
+	ctaLabel?: string;
+};
+
+export type AboutPageContent = {
+	hero: AboutPageHeroContent;
+	vision: AboutPageVisionContent;
+	values: AboutPageValuesContent[];
+	explore: AboutPageExploreContent;
 };
 
 export type CartEmptyContent = {
@@ -162,6 +220,19 @@ export type CheckoutContent = {
 	trust: CheckoutTrustContent;
 };
 
+export type ContactContent = {
+	phone: string;
+	address: string;
+};
+
+/**
+ * Channel-keyed contact details with a required `default` fallback.
+ * Resolution: `contact[channel] ?? contact.default` (see `resolveContactContent`).
+ */
+export type ContactContentByChannel = {
+	default: ContactContent;
+} & Record<string, ContactContent>;
+
 export type StorefrontChromeContent = {
 	announcementBar: AnnouncementBarContent;
 	nav: NavChromeContent;
@@ -172,6 +243,8 @@ export type NavChromeContent = {
 	allProductsLabel: string;
 	/** Footer link in mega menu panels — e.g. `View all {label}`. */
 	viewAllLabel: string;
+	/** Custom menu navigation links - eg. blog, contact, etc  */
+	items?: NavMenuItem[];
 };
 
 /**
@@ -181,13 +254,16 @@ export type NavChromeContent = {
 export type ProductsListingContent = {
 	title: string;
 	description: string;
+	image?: string;
 };
 
 export type StorefrontSurfacesContent = {
 	homepage: HomepageContent;
+	aboutpage: AboutPageContent;
 	products: ProductsListingContent;
 	cart: CartContent;
 	checkout: CheckoutContent;
+	contact: ContactContentByChannel;
 };
 
 export type StorefrontContent = {
