@@ -36,6 +36,11 @@ export function ImmersiveGallery({ images, productName }: ImmersiveGalleryProps)
 
 	const imagesKey = images.map((image) => image.url).join(",");
 	const { viewerIndex, isViewerOpen, openViewer, onViewerOpenChange } = useProductImageViewer(imagesKey);
+	const [lastImagesKey, setLastImagesKey] = React.useState(imagesKey);
+	if (lastImagesKey !== imagesKey) {
+		setLastImagesKey(imagesKey);
+		setSelectedIndex(0);
+	}
 
 	const syncFromApi = React.useCallback((carouselApi: CarouselApi | undefined) => {
 		if (!carouselApi) return;
@@ -59,7 +64,6 @@ export function ImmersiveGallery({ images, productName }: ImmersiveGalleryProps)
 	}, [api, syncFromApi]);
 
 	React.useEffect(() => {
-		setSelectedIndex(0);
 		api?.scrollTo(0, true);
 	}, [imagesKey, api]);
 

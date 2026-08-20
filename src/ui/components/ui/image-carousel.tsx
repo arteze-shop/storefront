@@ -73,10 +73,16 @@ export function ImageCarousel({
 	const [api, setApi] = React.useState<CarouselApi>();
 	const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-	// Reset to first image when images array changes (e.g., variant switch)
+	// Reset to first image when images array changes (e.g., variant switch).
+	// Adjusting state during render is the React-blessed reset-on-prop-change pattern.
 	const imagesKey = images.map((img) => img.url).join(",");
-	React.useEffect(() => {
+	const [lastImagesKey, setLastImagesKey] = React.useState(imagesKey);
+	if (lastImagesKey !== imagesKey) {
+		setLastImagesKey(imagesKey);
 		setSelectedIndex(0);
+	}
+
+	React.useEffect(() => {
 		api?.scrollTo(0, true); // true = instant scroll (no animation)
 	}, [imagesKey, api]);
 

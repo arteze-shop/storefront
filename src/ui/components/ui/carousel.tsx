@@ -62,6 +62,7 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 			setSelectedIndex(api.selectedScrollSnap());
 			setCanScrollPrev(api.canScrollPrev());
 			setCanScrollNext(api.canScrollNext());
+			setSlideCount(api.scrollSnapList().length);
 		}, []);
 
 		const scrollPrev = React.useCallback(() => {
@@ -101,12 +102,13 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 		React.useEffect(() => {
 			if (!api) return;
 
-			setSlideCount(api.scrollSnapList().length);
-			onSelect(api);
+			api.on("init", onSelect);
 			api.on("reInit", onSelect);
 			api.on("select", onSelect);
 
 			return () => {
+				api?.off("init", onSelect);
+				api?.off("reInit", onSelect);
 				api?.off("select", onSelect);
 			};
 		}, [api, onSelect]);

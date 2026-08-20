@@ -5,10 +5,14 @@ import * as React from "react";
 /** Local open/close state for the fullscreen product image viewer. */
 export function useProductImageViewer(imagesKey: string) {
 	const [viewerIndex, setViewerIndex] = React.useState<number | null>(null);
+	const [lastImagesKey, setLastImagesKey] = React.useState(imagesKey);
 
-	React.useEffect(() => {
+	// Reset the viewer when the images change (e.g. variant switch). Adjusting
+	// state during render is the React-blessed way to reset on prop change.
+	if (lastImagesKey !== imagesKey) {
+		setLastImagesKey(imagesKey);
 		setViewerIndex(null);
-	}, [imagesKey]);
+	}
 
 	return {
 		viewerIndex,
