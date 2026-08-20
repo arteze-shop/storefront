@@ -13,6 +13,7 @@ export {
 	storefrontContentPageSlugForChannel,
 } from "@/lib/content/constants";
 export { CheckoutContentProvider, useCheckoutContent } from "@/lib/content/checkout-content-context";
+export { resolveContactContent } from "@/lib/content/contact";
 export {
 	buildPolicyLabelValues,
 	formatPolicyAwareLabel,
@@ -23,6 +24,8 @@ export type {
 	AnnouncementBarContent,
 	CartContent,
 	CheckoutContent,
+	ContactContent,
+	ContactContentByChannel,
 	HomepageContent,
 	ReturnsPolicy,
 	ShippingPolicy,

@@ -2,6 +2,7 @@ import { resolveLocaleFromSlug } from "@/config/locale";
 import { resolveChannelCurrency } from "@/lib/channels/resolve-channel-currency";
 import { applyCacheProfile, CACHE_PROFILES } from "@/lib/cache-manifest";
 import { defaultStorefrontContent } from "@/lib/content/defaults";
+import { resolveFreeShippingThreshold } from "@/lib/content/free-shipping-threshold";
 import { getStorefrontContent } from "@/lib/content/get-storefront-content";
 import { buildPolicyLabelValues, formatPolicyAwareLabel } from "@/lib/content/policy-format";
 import type { AnnouncementBarContent, StorefrontContent } from "@/lib/content/types";
@@ -38,10 +39,21 @@ export async function getAnnouncementBarProps(
 	const bcp47 = resolveLocaleFromSlug(localeSlug).bcp47;
 	applyCacheProfile(CACHE_PROFILES.storefrontContent, { channel, locale: bcp47 });
 
-	const [content, currency] = await Promise.all([
+	const [content, currency, liveThreshold] = await Promise.all([
 		getStorefrontContent(channel, localeSlug),
 		resolveChannelCurrency(channel),
+		resolveFreeShippingThreshold(channel),
 	]);
 
-	return buildAnnouncementBarContent(content, { currency, localeSlug });
+	// Prefer the live channel threshold from Saleor shipping zones; fall back to the
+	// configured policy value (defaults) when the backend has no free-shipping method.
+	const policies = {
+		...content.policies,
+		shipping: {
+			...content.policies.shipping,
+			freeShippingThreshold: liveThreshold ?? content.policies.shipping.freeShippingThreshold,
+		},
+	};
+
+	return buildAnnouncementBarContent({ ...content, policies }, { currency, localeSlug });
 }

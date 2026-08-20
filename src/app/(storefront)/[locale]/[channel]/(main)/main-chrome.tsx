@@ -1,5 +1,6 @@
 import { type ReactNode, Suspense } from "react";
-import { Footer } from "@/ui/components/footer";
+// import { Footer } from "@/ui/components/footer";
+import { CustomFooter } from "@/ui/components/custom-footer";
 import { Header } from "@/ui/components/header";
 import { ScrollToTopOnNavigate } from "@/ui/components/shared/scroll-to-top-on-navigate";
 import { Logo } from "@/ui/components/shared/logo";
@@ -72,7 +73,7 @@ async function HeaderSlot({ params }: { params: BrowseRouteParams }) {
 
 async function FooterSlot({ params }: { params: BrowseRouteParams }) {
 	const { locale, channel } = await params;
-	return <Footer locale={locale} channel={channel} />;
+	return <CustomFooter locale={locale} channel={channel} />;
 }
 
 /**

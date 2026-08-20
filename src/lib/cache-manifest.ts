@@ -102,6 +102,20 @@ const profiles = {
 		tagPattern: "storefront-content:{channel}:{locale}",
 		pathPattern: "/{locale}/{channel}",
 	},
+	freeShipping: {
+		id: "free-shipping",
+		label: "Free Shipping Threshold",
+		cacheProfile: "menus",
+		tagPattern: "free-shipping:{channel}",
+		pathPattern: null,
+	},
+	shippingMethods: {
+		id: "shipping-methods",
+		label: "Shipping Methods",
+		cacheProfile: "menus",
+		tagPattern: "shipping-methods:{channel}",
+		pathPattern: null,
+	},
 } as const satisfies Record<string, CacheProfile>;
 
 export const CACHE_PROFILES = profiles;

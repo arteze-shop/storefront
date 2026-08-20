@@ -1,5 +1,9 @@
 import { Suspense } from "react";
-import { getAnnouncementBarProps, getStorefrontContent } from "@/lib/content/server";
+import {
+	getAnnouncementBarProps,
+	getStorefrontContent,
+	resolveFreeShippingThreshold,
+} from "@/lib/content/server";
 import { CartDrawerWrapper } from "@/ui/components/cart/cart-drawer-wrapper";
 import { AnnouncementBar } from "@/ui/sections/announcement-bar/announcement-bar";
 import { DismissibleAnnouncementBar } from "@/ui/sections/announcement-bar/announcement-bar-slot";
@@ -41,14 +45,26 @@ export async function AnnouncementBarSlot({ params }: { params: BrowseRouteParam
  */
 export async function CartDrawerSlot({ params }: { params: BrowseRouteParams }) {
 	const { locale: localeSlug, channel } = await params;
-	const content = await getStorefrontContent(channel, localeSlug);
+	// const content = await getStorefrontContent(channel, localeSlug);
+	const [content, liveThreshold] = await Promise.all([
+		getStorefrontContent(channel, localeSlug),
+		resolveFreeShippingThreshold(channel),
+	]);
+
+	const policies = {
+		...content.policies,
+		shipping: {
+			...content.policies.shipping,
+			freeShippingThreshold: liveThreshold ?? content.policies.shipping.freeShippingThreshold,
+		},
+	};
 
 	return (
 		<CartDrawerWrapper
 			channel={channel}
 			localeSlug={localeSlug}
 			cart={content.surfaces.cart}
-			policies={content.policies}
+			policies={policies}
 		/>
 	);
 }

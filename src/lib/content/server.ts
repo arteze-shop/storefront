@@ -4,3 +4,5 @@
  */
 export { getStorefrontContent } from "@/lib/content/get-storefront-content";
 export { getAnnouncementBarProps } from "@/lib/content/get-announcement-bar-props";
+export { resolveFreeShippingThreshold } from "@/lib/content/free-shipping-threshold";
+export { resolveShippingMethods } from "@/lib/content/resolve-shipping-methods";
