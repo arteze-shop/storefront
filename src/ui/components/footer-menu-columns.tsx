@@ -24,7 +24,7 @@ function FooterMenuChildLink({ child }: { child: MenuItem }) {
 			<LinkWithChannel
 				href={`/categories/${child.category.slug}`}
 				prefetch={false}
-				className="text-sm text-inverse-subtle transition-colors hover:text-inverse"
+				className="text-sm text-inverse-subtle transition-colors hover:text-secondary"
 			>
 				{child.category.name}
 			</LinkWithChannel>
@@ -35,7 +35,7 @@ function FooterMenuChildLink({ child }: { child: MenuItem }) {
 			<LinkWithChannel
 				href={`/collections/${child.collection.slug}`}
 				prefetch={false}
-				className="text-sm text-inverse-subtle transition-colors hover:text-inverse"
+				className="text-sm text-inverse-subtle transition-colors hover:text-secondary"
 			>
 				{child.collection.name}
 			</LinkWithChannel>
@@ -46,7 +46,7 @@ function FooterMenuChildLink({ child }: { child: MenuItem }) {
 			<LinkWithChannel
 				href={`/pages/${child.page.slug}`}
 				prefetch={false}
-				className="text-sm text-inverse-subtle transition-colors hover:text-inverse"
+				className="text-sm text-inverse-subtle transition-colors hover:text-secondary"
 			>
 				{child.page.title}
 			</LinkWithChannel>
@@ -56,7 +56,7 @@ function FooterMenuChildLink({ child }: { child: MenuItem }) {
 		return (
 			<NavHrefLink
 				href={child.url}
-				className="text-sm text-inverse-subtle transition-colors hover:text-inverse"
+				className="text-sm text-inverse-subtle transition-colors hover:text-secondary"
 			>
 				{child.name}
 			</NavHrefLink>
@@ -109,8 +109,8 @@ export function FooterMenuColumns({ items }: { items: MenuItem[] }) {
 		<>
 			{items.map((item) => (
 				<div key={item.id}>
-					<h4 className="mb-4 text-sm font-medium text-inverse">{item.name}</h4>
-					<ul className="space-y-3">
+					<h4 className="mb-4 font-fraunces text-xl font-medium text-inverse">{item.name}</h4>
+					<ul className="space-y-2">
 						{item.children?.map((child) => (
 							<li key={child.id}>
 								<FooterMenuChildLink child={child} />

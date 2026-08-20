@@ -124,8 +124,8 @@ export function StorefrontRegionPicker({
 					"group inline-flex max-w-full items-center gap-2.5 rounded-full border px-4 py-2.5 text-sm transition-all",
 					"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
 					inverted
-						? "border-inverse/20 bg-background/5 hover:border-inverse/35 hover:bg-background/10 focus-visible:ring-background/40 text-inverse-subtle hover:text-inverse focus-visible:ring-offset-foreground"
-						: "hover:border-border/80 hover:bg-secondary/60 border-border bg-background text-foreground shadow-sm focus-visible:ring-ring focus-visible:ring-offset-background",
+						? "border-inverse/20 bg-background/5 text-inverse-subtle hover:border-inverse/35 hover:bg-background/10 hover:text-inverse focus-visible:ring-background/40 focus-visible:ring-offset-foreground"
+						: "border-border bg-background text-foreground shadow-sm hover:border-border/80 hover:bg-secondary/60 focus-visible:ring-ring focus-visible:ring-offset-background",
 					className,
 				)}
 				aria-label={t("ariaLabel")}
@@ -153,7 +153,8 @@ export function StorefrontRegionPicker({
 				sideOffset={10}
 				collisionPadding={16}
 				className={cn(
-					"w-[min(calc(100vw-2rem),24rem)] rounded-xl border p-3 shadow-lg",
+					// "w-[min(calc(100vw-2rem),24rem)] rounded-xl border p-3 shadow-lg",
+					"rounded-xl border p-3 shadow-lg",
 					showLanguage && showMarket && "sm:w-[28rem]",
 				)}
 			>
@@ -167,7 +168,7 @@ export function StorefrontRegionPicker({
 											key={item.slug}
 											value={item.slug}
 											lang={item.slug}
-											className="data-[state=checked]:bg-accent/60 my-0.5 rounded-lg py-2.5 pl-3 pr-3 [&>span:first-child]:hidden"
+											className="my-0.5 rounded-lg py-2.5 pl-3 pr-3 data-[state=checked]:bg-accent/60 [&>span:first-child]:hidden"
 										>
 											<OptionRow label={item.label} selected={item.slug === locale} />
 										</DropdownMenuRadioItem>
@@ -185,10 +186,10 @@ export function StorefrontRegionPicker({
 										<DropdownMenuRadioItem
 											key={item.id}
 											value={item.slug}
-											className="data-[state=checked]:bg-accent/60 my-0.5 rounded-lg py-2.5 pl-3 pr-3 [&>span:first-child]:hidden"
+											className="my-0.5 rounded-lg py-2.5 pl-3 pr-3 data-[state=checked]:bg-accent/60 [&>span:first-child]:hidden"
 										>
 											<OptionRow
-												label={item.displayLabel}
+												label={item.displayLabel.replace(/channel-/i, "")}
 												hint={item.currencyHint}
 												selected={item.slug === channel}
 											/>
