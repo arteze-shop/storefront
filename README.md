@@ -146,7 +146,6 @@ STOREFRONT_DISCOVER_CHANNELS=true # Opt-in: discover ALL active Saleor channels 
 # (not recommended when Saleor has many channels; prefer STOREFRONT_CHANNELS)
 # Storefront blog cms: sanity
 SANITY_PROJECT_ID=
-SANITY_API_READ_TOKEN=
 # The Ziina app must be installed and configured (with a channel config) in Saleor Dashboard.
 NEXT_PUBLIC_ENABLE_ZIINA_PAYMENTS=true
 ENABLE_ZIINA_PAYMENTS=true
