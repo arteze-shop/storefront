@@ -206,7 +206,7 @@ export const BillingAddressSection: FC<BillingAddressSectionProps> = ({
 			className={cn("space-y-4", disabled && "pointer-events-none opacity-60")}
 			aria-disabled={disabled || undefined}
 		>
-			<h2 className="text-lg font-semibold">{t("title")}</h2>
+			<h2 className="font-fraunces text-lg font-semibold">{t("title")}</h2>
 
 			{sectionError ? <p className="text-sm text-destructive">{sectionError}</p> : null}
 

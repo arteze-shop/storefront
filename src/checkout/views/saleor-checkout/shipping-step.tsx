@@ -112,7 +112,7 @@ export const ShippingStep: FC<ShippingStepProps> = ({
 			) : null}
 
 			<section className="space-y-4">
-				<h2 className="text-lg font-semibold">{t("shipping.methodTitle")}</h2>
+				<h2 className="font-fraunces text-lg font-semibold">{t("shipping.methodTitle")}</h2>
 
 				{error ? <p className="text-sm text-destructive">{error}</p> : null}
 
@@ -155,8 +155,8 @@ export const ShippingStep: FC<ShippingStepProps> = ({
 										"flex cursor-pointer items-center gap-4 rounded-lg border p-4 transition-colors",
 										"focus-within:ring-2 focus-within:ring-foreground focus-within:ring-offset-2",
 										isSelected
-											? "bg-secondary/50 border-foreground"
-											: "hover:border-muted-foreground/50 border-border",
+											? "border-foreground bg-secondary/50"
+											: "border-border hover:border-muted-foreground/50",
 									)}
 								>
 									<input

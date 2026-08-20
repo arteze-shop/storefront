@@ -29,3 +29,12 @@ export {
 	type StripeGatewayConfigData,
 	type StripeTransactionData,
 } from "./providers/stripe";
+export {
+	ZIINA_GATEWAY_ID,
+	isZiinaGateway,
+	findZiinaGateway,
+	isZiinaPaymentEnabled,
+	getZiinaPaymentGuardError,
+	getZiinaRedirectUrl,
+	parseZiinaTransactionData,
+} from "./providers/ziina";

@@ -42,6 +42,7 @@ export function useCheckoutPaymentMessages() {
 			freeOrderBody: (total: string) => t("freeOrderBody", { total }),
 			dummyTestMode: t("dummyTestMode"),
 			stripeLoadTitle: t("stripeLoadTitle"),
+			ziinaRedirecting: t("ziinaRedirecting"),
 		}),
 		[t],
 	);

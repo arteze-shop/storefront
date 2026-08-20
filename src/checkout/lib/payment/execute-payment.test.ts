@@ -15,6 +15,7 @@ const gatewayMessages = buildCheckoutGatewayMessages((key, values) => {
 		dummyMissingTitle: "Dummy missing title",
 		noGatewayConfigured: "No gateway configured",
 		stripeUseCardForm: "Use card form",
+		ziinaUseRedirect: "Use redirect",
 		paymentFailed: "Payment failed",
 		paymentTryAgain: "Try again",
 		paymentWebhookFailed: "Webhook failed",
@@ -101,6 +102,17 @@ describe("executePayment", () => {
 		expect(result).toEqual({ ok: true, orderId: "order-free" });
 		expect(initializeTransaction).not.toHaveBeenCalled();
 		expect(completeCheckout).toHaveBeenCalledWith("checkout-1");
+	});
+
+	it("defers ziina payment to the hosted redirect without initializing a transaction", async () => {
+		const result = await executePayment(
+			{ type: "ziina", gateway: { id: "saleor.app.payment.ziina", name: "Ziina" }, submitMode: "client" },
+			{ checkoutId: "checkout-1", amount: 42.5 },
+			gatewayMessages,
+		);
+
+		expect(result).toEqual({ ok: false, error: "Use redirect", errorKey: "payment" });
+		expect(initializeTransaction).not.toHaveBeenCalled();
 	});
 
 	it("returns error for unsupported provider", async () => {

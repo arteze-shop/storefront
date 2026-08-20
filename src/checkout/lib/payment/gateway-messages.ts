@@ -12,6 +12,7 @@ export type CheckoutGatewayMessages = {
 	dummyMissingTitle: string;
 	noGatewayConfigured: string;
 	stripeUseCardForm: string;
+	ziinaUseRedirect: string;
 	paymentFailed: string;
 	paymentTryAgain: string;
 	paymentWebhookFailed: string;
@@ -28,6 +29,7 @@ type GatewayMessageKey =
 	| "dummyMissingTitle"
 	| "noGatewayConfigured"
 	| "stripeUseCardForm"
+	| "ziinaUseRedirect"
 	| "paymentFailed"
 	| "paymentTryAgain"
 	| "paymentWebhookFailed"
@@ -47,6 +49,7 @@ export function buildCheckoutGatewayMessages(t: GatewayTranslator): CheckoutGate
 		dummyMissingTitle: t("dummyMissingTitle"),
 		noGatewayConfigured: t("noGatewayConfigured"),
 		stripeUseCardForm: t("stripeUseCardForm"),
+		ziinaUseRedirect: t("ziinaUseRedirect"),
 		paymentFailed: t("paymentFailed"),
 		paymentTryAgain: t("paymentTryAgain"),
 		paymentWebhookFailed: t("paymentWebhookFailed"),

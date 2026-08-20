@@ -47,7 +47,7 @@ export function CheckoutHeader({
 					</StorefrontHomeLink>
 
 					{/* Progress Steps - Desktop */}
-					<nav className="hidden items-center gap-2 md:flex" aria-label={t("stepsAriaLabel")}>
+					<nav className="hidden items-center gap-2 font-fraunces md:flex" aria-label={t("stepsAriaLabel")}>
 						{steps.map((s, i) => (
 							<div key={s.number} className="flex items-center">
 								<button

@@ -83,6 +83,27 @@ describe("resolvePaymentProvider", () => {
 		});
 	});
 
+	it("returns ziina when enabled and present in development", () => {
+		vi.stubEnv("NODE_ENV", "development");
+		const ziina = { id: "saleor.app.payment.ziina", name: "Ziina" };
+		expect(resolvePaymentProvider([ziina])).toEqual({
+			type: "ziina",
+			gateway: ziina,
+			submitMode: "client",
+		});
+	});
+
+	it("returns ziina when enabled in production and present", () => {
+		vi.stubEnv("NODE_ENV", "production");
+		vi.stubEnv("NEXT_PUBLIC_ENABLE_ZIINA_PAYMENTS", "true");
+		const ziina = { id: "saleor.app.payment.ziina", name: "Ziina" };
+		expect(resolvePaymentProvider([ziina])).toEqual({
+			type: "ziina",
+			gateway: ziina,
+			submitMode: "client",
+		});
+	});
+
 	it("returns none for an empty gateway list", () => {
 		expect(resolvePaymentProvider([])).toEqual({ type: "none" });
 	});
@@ -120,6 +141,13 @@ describe("usesClientPaymentSubmit", () => {
 				submitMode: "server",
 			}),
 		).toBe(false);
+		expect(
+			usesClientPaymentSubmit({
+				type: "ziina",
+				gateway: { id: "saleor.app.payment.ziina", name: "Ziina" },
+				submitMode: "client",
+			}),
+		).toBe(true);
 		expect(usesClientPaymentSubmit({ type: "none" })).toBe(false);
 	});
 });
@@ -143,5 +171,12 @@ describe("canSubmitPayment", () => {
 		expect(canSubmitPayment({ type: "none" })).toBe(false);
 		expect(canSubmitPayment({ type: "dummy_missing" })).toBe(false);
 		expect(canSubmitPayment({ type: "unsupported", gateways: [] })).toBe(false);
+		expect(
+			canSubmitPayment({
+				type: "ziina",
+				gateway: { id: "saleor.app.payment.ziina", name: "Ziina" },
+				submitMode: "client",
+			}),
+		).toBe(false);
 	});
 });

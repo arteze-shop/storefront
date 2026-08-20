@@ -25,6 +25,12 @@ export async function executePayment(
 				error: messages.stripeUseCardForm,
 				errorKey: "payment",
 			};
+		case "ziina":
+			return {
+				ok: false,
+				error: messages.ziinaUseRedirect,
+				errorKey: "payment",
+			};
 		case "none":
 			return {
 				ok: false,

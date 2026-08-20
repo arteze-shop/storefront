@@ -82,7 +82,7 @@ export const ShippingAddressSection: FC<ShippingAddressSectionProps> = ({
 
 	return (
 		<section className="space-y-4">
-			<h2 className="text-xl font-semibold">{t("addressTitle")}</h2>
+			<h2 className="font-fraunces text-xl font-semibold">{t("addressTitle")}</h2>
 
 			{showAddressList ? (
 				<>

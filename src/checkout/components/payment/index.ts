@@ -6,6 +6,10 @@ export { PaymentMethodArea } from "./payment-method-area";
 
 export { IntegratedPaymentUi } from "./integrated-payment-ui";
 
+export { ZiinaPayment, type ZiinaBillingContext } from "./ziina/ziina-payment";
+
+export { ZiinaCheckoutCompletionHost } from "./ziina/ziina-checkout-completion-host";
+
 export { PaymentError } from "./payment-error";
 
 export {

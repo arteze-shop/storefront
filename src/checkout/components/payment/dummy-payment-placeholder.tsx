@@ -21,7 +21,7 @@ export const DummyPaymentPlaceholder: FC<DummyPaymentPlaceholderProps> = ({ gate
 
 	return (
 		<section className="space-y-3">
-			<h2 className="text-lg font-semibold">{tSteps("payment")}</h2>
+			<h2 className="font-fraunces text-lg font-semibold">{tSteps("payment")}</h2>
 			<p className="flex items-start gap-2 text-sm text-muted-foreground">
 				<FlaskConical className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
 				<span>
@@ -53,7 +53,7 @@ const CARD_SURFACE_STYLE = {
  * Decorative card preview — non-interactive, test checkout only.
  */
 const TestCardMockup: FC = () => (
-	<div aria-hidden className="relative aspect-[856/520] w-full">
+	<div aria-hidden className="relative aspect-[16/9] w-full md:max-w-sm">
 		<div
 			className="absolute inset-0 overflow-hidden rounded-2xl p-5 text-white sm:p-6"
 			style={CARD_SURFACE_STYLE}

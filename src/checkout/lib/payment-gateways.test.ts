@@ -148,6 +148,17 @@ describe("hasUnsupportedPaymentGateway", () => {
 			]),
 		).toBe(false);
 	});
+
+	it("returns false when ziina is enabled and is the only substantive gateway", () => {
+		vi.stubEnv("NODE_ENV", "production");
+		vi.stubEnv("NEXT_PUBLIC_ENABLE_ZIINA_PAYMENTS", "true");
+		expect(
+			hasUnsupportedPaymentGateway([
+				{ id: "saleor.app.payment.ziina", name: "Ziina" },
+				{ id: "saleor.io.gift-card-payment-gateway", name: "Gift Card Payment Gateway" },
+			]),
+		).toBe(false);
+	});
 });
 
 describe("formatGatewayList", () => {
@@ -194,6 +205,15 @@ describe("resolvePaymentGatewayStatus", () => {
 		expect(resolvePaymentGatewayStatus([stripe])).toEqual({
 			kind: "stripe",
 			gateway: stripe,
+		});
+	});
+
+	it("returns ziina when enabled and present in development", () => {
+		vi.stubEnv("NODE_ENV", "development");
+		const ziina = { id: "saleor.app.payment.ziina", name: "Ziina" };
+		expect(resolvePaymentGatewayStatus([ziina])).toEqual({
+			kind: "ziina",
+			gateway: ziina,
 		});
 	});
 

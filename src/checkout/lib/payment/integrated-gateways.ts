@@ -8,12 +8,17 @@ import {
 	isStripeGateway,
 	isStripePaymentEnabled,
 } from "@/checkout/lib/payment/providers/stripe";
+import {
+	findZiinaGateway,
+	isZiinaGateway,
+	isZiinaPaymentEnabled,
+} from "@/checkout/lib/payment/providers/ziina";
 import { type PaymentGatewayLike, type PaymentSubmitMode } from "./types";
 
 /** Built-in gateways this UI does not integrate with but should not block checkout. */
 export const IGNORABLE_GATEWAY_IDS = ["saleor.io.gift-card-payment-gateway"] as const;
 
-export type IntegratedGatewayType = "stripe" | "dummy";
+export type IntegratedGatewayType = "stripe" | "ziina" | "dummy";
 
 type IntegratedGatewayDefinition = {
 	type: IntegratedGatewayType;
@@ -34,6 +39,13 @@ export const INTEGRATED_GATEWAYS: readonly IntegratedGatewayDefinition[] = [
 		findGateway: (gateways) => findStripeGateway(gateways),
 		isEnabled: isStripePaymentEnabled,
 		matchesGateway: (gateway) => isStripeGateway(gateway.id),
+	},
+	{
+		type: "ziina",
+		submitMode: "client",
+		findGateway: (gateways) => findZiinaGateway(gateways),
+		isEnabled: isZiinaPaymentEnabled,
+		matchesGateway: (gateway) => isZiinaGateway(gateway.id),
 	},
 	{
 		type: "dummy",

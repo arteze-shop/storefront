@@ -18,6 +18,14 @@ export {
 	isDummyPaymentAllowed,
 } from "@/checkout/lib/payment/providers/dummy";
 
+export {
+	ZIINA_GATEWAY_ID,
+	findZiinaGateway,
+	getZiinaPaymentGuardError,
+	isZiinaGateway,
+	isZiinaPaymentEnabled,
+} from "@/checkout/lib/payment/providers/ziina";
+
 export { hasUnsupportedPaymentGateway, isIgnorableGateway } from "@/checkout/lib/payment/integrated-gateways";
 
 type GatewayLike = Pick<PaymentGatewayFragment, "id" | "name">;
@@ -25,6 +33,7 @@ type GatewayLike = Pick<PaymentGatewayFragment, "id" | "name">;
 export type PaymentGatewayStatus =
 	| { kind: "dummy"; gateway: GatewayLike }
 	| { kind: "stripe"; gateway: GatewayLike }
+	| { kind: "ziina"; gateway: GatewayLike }
 	| { kind: "none" }
 	| { kind: "unsupported" }
 	| { kind: "dummy_missing" };
@@ -40,6 +49,8 @@ export function resolvePaymentGatewayStatus(
 			return { kind: "dummy", gateway: provider.gateway };
 		case "stripe":
 			return { kind: "stripe", gateway: provider.gateway };
+		case "ziina":
+			return { kind: "ziina", gateway: provider.gateway };
 		case "none":
 			return { kind: "none" };
 		case "unsupported":

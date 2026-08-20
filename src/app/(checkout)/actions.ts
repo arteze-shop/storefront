@@ -82,6 +82,7 @@ import {
 	hasMaterialCheckoutTotalChange,
 } from "@/checkout/lib/payment/checkout-pay-amount";
 import { getStripePaymentGuardError, isStripePaymentEnabled } from "@/checkout/lib/payment/providers/stripe";
+import { getZiinaPaymentGuardError, isZiinaPaymentEnabled } from "@/checkout/lib/payment/providers/ziina";
 import { buildMarketingConsentMetadata } from "@/checkout/lib/marketing-consent";
 import { fetchCheckoutOnServer } from "@/checkout/lib/server/fetch-checkout";
 import { getCheckoutServerTranslations } from "@/checkout/lib/server/get-checkout-server-translations";
@@ -484,6 +485,11 @@ export async function initializeCheckoutTransaction(
 		return { ok: false, error: t("stripeNotEnabled") };
 	}
 
+	const ziinaGuardError = getZiinaPaymentGuardError(variables.paymentGateway?.id);
+	if (ziinaGuardError) {
+		return { ok: false, error: t("ziinaNotEnabled") };
+	}
+
 	// Defense in depth: never trust the client-supplied amount. Saleor re-validates
 	// coverage at checkoutComplete, but rejecting here avoids authorizing a wrong amount.
 	if (typeof variables.amount === "number") {
@@ -528,7 +534,7 @@ export async function processCheckoutTransaction(
 	// Mirror the initialize guards: when every integrated gateway is disabled for this
 	// environment, a direct call to this action must not drive transactions either.
 	// Forks adding gateways should extend this check alongside the initialize guards.
-	if (!isStripePaymentEnabled() && !isDummyPaymentAllowed()) {
+	if (!isStripePaymentEnabled() && !isDummyPaymentAllowed() && !isZiinaPaymentEnabled()) {
 		const { server: t } = await getCheckoutServerTranslations();
 		return { ok: false, error: t("paymentsDisabled") };
 	}

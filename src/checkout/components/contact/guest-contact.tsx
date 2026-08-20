@@ -57,7 +57,7 @@ export const GuestContact: FC<GuestContactProps> = ({
 	return (
 		<section className="space-y-4">
 			<div className="flex items-center justify-between">
-				<h2 className="text-xl font-semibold">{tCheckout("contact.title")}</h2>
+				<h2 className="font-fraunces text-xl font-semibold">{tCheckout("contact.title")}</h2>
 				<p className="text-sm text-muted-foreground">
 					{tCheckout("contact.haveAccount")}{" "}
 					<button
@@ -130,7 +130,7 @@ export const GuestContact: FC<GuestContactProps> = ({
 						</div>
 						{passwordError && <p className="text-sm text-destructive">{passwordError}</p>}
 					</div>
-					<div className="bg-muted/50 flex items-start gap-2 rounded-md p-3 text-sm text-muted-foreground">
+					<div className="flex items-start gap-2 rounded-md bg-muted/50 p-3 text-sm text-muted-foreground">
 						<Info className="mt-0.5 h-4 w-4 shrink-0" />
 						<p>{tCheckout("contact.activationNotice")}</p>
 					</div>
