@@ -1,0 +1,28 @@
+query ShippingZonesForChannel($channel: String!) {
+	shippingZones(channel: $channel, first: 50) {
+		edges {
+			node {
+				id
+				shippingMethods {
+					id
+					name
+					minimumDeliveryDays
+					maximumDeliveryDays
+					channelListings {
+						channel {
+							slug
+						}
+						price {
+							amount
+							currency
+						}
+						minimumOrderPrice {
+							amount
+							currency
+						}
+					}
+				}
+			}
+		}
+	}
+}
