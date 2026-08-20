@@ -17,7 +17,7 @@ export function CartButton({ itemCount }: CartButtonProps) {
 			type="button"
 			onClick={openCart}
 			data-testid="CartNavItem"
-			className="relative inline-flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-accent hover:text-accent-foreground"
+			className="relative inline-flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-primary/80 hover:text-accent-foreground"
 		>
 			<ShoppingBagIcon className="h-5 w-5" aria-hidden="true" />
 			{itemCount > 0 && (

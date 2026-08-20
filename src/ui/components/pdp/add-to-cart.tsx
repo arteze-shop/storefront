@@ -39,7 +39,13 @@ function AddToCartButton({
 			type="submit"
 			size="lg"
 			disabled={disabled || pending}
-			className={cn("h-14 w-full text-base font-medium transition-all duration-200", pending && "opacity-80")}
+			className={
+				// cn("h-14 w-full text-base font-medium transition-all duration-200", pending && "opacity-80")
+				cn(
+					"h-auto w-full rounded-full px-7 py-3.5 text-base font-semibold transition-all duration-200",
+					pending && "opacity-80",
+				)
+			}
 		>
 			<ShoppingBag className={cn("mr-2 h-5 w-5 transition-transform", pending && "scale-90")} />
 			{getButtonText()}

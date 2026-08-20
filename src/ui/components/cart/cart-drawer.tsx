@@ -188,12 +188,12 @@ export function CartDrawer({
 						<SheetTitle>{drawer.title}</SheetTitle>
 						<span className="text-sm text-muted-foreground">({t("itemCount", { count: itemCount })})</span>
 					</div>
-					<SheetCloseButton className="static" />
+					<SheetCloseButton className="static transition-colors hover:bg-primary/80 hover:text-background" />
 				</SheetHeader>
 
 				{/* Free Shipping Progress */}
 				{lines.length > 0 && freeShippingEnabled && (
-					<div className="bg-secondary/50 border-b border-border px-6 py-4">
+					<div className="border-b border-border bg-secondary/50 px-6 py-4">
 						<div className="mb-2 flex items-center gap-2 text-sm">
 							<Truck className={cn("h-4 w-4", amountToFreeShipping <= 0 && "text-success")} />
 							{amountToFreeShipping > 0 ? (
@@ -251,7 +251,7 @@ export function CartDrawer({
 											<LinkWithChannel
 												href={`/products/${line.variant.product.slug}?variant=${line.variant.id}`}
 												onClick={closeCart}
-												className="group relative h-24 w-20 shrink-0 overflow-hidden rounded-lg bg-secondary"
+												className="group relative h-24 w-20 shrink-0 overflow-hidden rounded-lg border bg-transparent"
 											>
 												{line.variant.product.thumbnail?.url && (
 													<Image
