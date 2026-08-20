@@ -2,6 +2,22 @@
 import createNextIntlPlugin from "next-intl/plugin";
 import { paperCacheLifeProfiles } from "./src/lib/cache-life-profiles.data.mjs";
 
+const isDev = process.env.NODE_ENV === "development";
+const mediaDomain = process.env.NEXT_PUBLIC_MEDIA_DOMAIN || "media.arteze.shop";
+const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN || "api.arteze.shop";
+
+const devPatterns = [
+	{ protocol: "http", hostname: "localhost", port: "8000" },
+	{ protocol: "https", hostname: mediaDomain },
+	{ protocol: "https", hostname: apiDomain },
+];
+
+const prodPatterns = [
+	{ protocol: "https", hostname: mediaDomain },
+	{ protocol: "https", hostname: apiDomain },
+	{ protocol: "https", hostname: "*.arteze.shop" },
+];
+
 /** Hostnames for mobile/tunnel dev (ngrok, LAN). See ALLOWED_DEV_ORIGINS in .env.example */
 const allowedDevOrigins = process.env.ALLOWED_DEV_ORIGINS?.split(",")
 	.map((origin) => origin.trim())
@@ -24,23 +40,13 @@ const config = {
 		// Note: API rate limiting is handled by RequestQueue in src/lib/graphql.ts
 		// (max 3 concurrent requests + 200ms delay between requests)
 	},
+	dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
 	images: {
+		loader: "custom",
+		loaderFile: "./src/lib/imageLoader.ts",
 		// WebP only: AVIF cold-encodes add ~500ms+ to first /_next/image hit on Vercel (hurts LCP).
 		formats: ["image/webp"],
-		remotePatterns: [
-			{
-				// Saleor Cloud CDN
-				hostname: "*.saleor.cloud",
-			},
-			{
-				// Saleor Media (common pattern)
-				hostname: "*.media.saleor.cloud",
-			},
-			{
-				// Allow all hostnames in development (restrict in production)
-				hostname: "*",
-			},
-		],
+		remotePatterns: isDev ? devPatterns : prodPatterns,
 	},
 	typedRoutes: false,
 
@@ -54,7 +60,6 @@ const config = {
 
 	// Cache headers for static assets and API routes
 	async headers() {
-		const isDev = process.env.NODE_ENV === "development";
 		return [
 			// In development, prevent aggressive caching of dynamic chunks
 			...(isDev
