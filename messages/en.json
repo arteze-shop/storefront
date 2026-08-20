@@ -542,7 +542,11 @@
 			"authorizedBody": "Your payment is authorized (capture happens when we fulfill the order). Tap below to place your order — you will not be charged again at checkout.",
 			"freeOrderBody": "Your order total is {total}. No payment is required — confirm below to place your order.",
 			"dummyTestMode": "Test mode. No card details needed — use Pay to complete a test order.",
-			"stripeLoadTitle": "Could not load Stripe"
+			"stripeLoadTitle": "Could not load Stripe",
+			"ziinaGateway": "Ziina",
+			"ziinaRedirecting": "Redirecting to Ziina to complete your payment…",
+			"ziinaDescription": "You'll be redirected to Ziina's secure hosted payment page to complete your purchase.",
+			"ziinaLoadTitle": "Could not load Ziina"
 		},
 		"confirmation": {
 			"orderNumber": "Order #{number}",
@@ -571,7 +575,8 @@
 			"validationRulesUnavailable": "Validation rules not available",
 			"setDefaultAddressFailed": "Failed to set default address",
 			"dummyNotAllowed": "Test payment is not available in this environment.",
-			"stripeNotEnabled": "Stripe payments are not enabled in this environment. Set NEXT_PUBLIC_ENABLE_STRIPE_PAYMENTS=true on the storefront."
+			"stripeNotEnabled": "Stripe payments are not enabled in this environment. Set NEXT_PUBLIC_ENABLE_STRIPE_PAYMENTS=true on the storefront.",
+			"ziinaNotEnabled": "Ziina payments are not enabled in this environment. Set NEXT_PUBLIC_ENABLE_ZIINA_PAYMENTS=true on the storefront."
 		},
 		"gateways": {
 			"noneTitle": "No payment gateway configured",
@@ -583,6 +588,7 @@
 			"dummyMissingBody": "Dummy Payment App is installed, but it is not available for this checkout. In Saleor Dashboard, check the app is active, webhooks are delivering successfully, and the checkout currency is supported (USD for the hosted app).",
 			"noGatewayConfigured": "No payment gateway configured. Please contact support or configure a payment app in Saleor.",
 			"stripeUseCardForm": "Stripe payment is handled by the card form. Complete payment using the Stripe payment section above.",
+			"ziinaUseRedirect": "Ziina payment is handled on the Ziina hosted payment page. Complete payment using the Ziina payment section above.",
 			"paymentFailed": "Payment failed",
 			"paymentTryAgain": "Payment failed. Please try again.",
 			"paymentWebhookFailed": "Payment app webhook failed. In Saleor Dashboard → Apps → Dummy Payment App, check webhook deliveries are succeeding.",
