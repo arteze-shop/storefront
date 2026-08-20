@@ -21,7 +21,7 @@
 	"tailwindCSS.experimental.classRegex": [["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]],
 	"css.validate": true,
 	"files.associations": {
-		"*.css": "tailwindcss"
+		"*.css": "css"
 	},
 
 	// === GraphQL ===
