@@ -73,7 +73,7 @@ export function CustomHero({
 			{/* Overlay on pattern side */}
 			<div
 				className="absolute bottom-0 right-0 top-0 hidden w-[48%] md:block"
-				style={{ backgroundColor: "rgba(250,247,238,0.45)" }}
+				style={{ backgroundColor: "oklch(var(--hero-cream) / 0.45)" }}
 			/>
 
 			{/* Hero image (right half) */}
@@ -91,18 +91,24 @@ export function CustomHero({
 			{/* Hero Content */}
 			<div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-24 sm:px-6 md:grid-cols-2">
 				<div>
-					<p className="mb-4 text-xs uppercase tracking-[0.2em]" style={{ color: "#E8503A" }}>
+					<p
+						className="mb-4 text-xs uppercase tracking-[0.2em]"
+						style={{ color: "oklch(var(--hero-accent))" }}
+					>
 						Handmade • Artisan • Sustainable
 					</p>
-					<h1 className="mb-6 text-display" style={{ color: "#2C1810" }}>
+					<h1 className="mb-6 text-display" style={{ color: "oklch(var(--hero-ink))" }}>
 						Home goods made
 						<br />
-						<em style={{ color: "#E8503A" }}>by hand,</em>
+						<em style={{ color: "oklch(var(--hero-accent))" }}>by hand,</em>
 						<br />
 						with heart.
 					</h1>
 					{subheading ? (
-						<p className="mb-8 max-w-md text-base leading-relaxed" style={{ color: "#6B4F3A" }}>
+						<p
+							className="mb-8 max-w-md text-base leading-relaxed"
+							style={{ color: "oklch(var(--hero-taupe))" }}
+						>
 							{subheading}
 						</p>
 					) : null}

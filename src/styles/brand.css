@@ -78,6 +78,15 @@
 	--inverse-muted: 0.55 0 0;
 	--border-inverse: 0.28 0 0;
 
+	/* --- Brand hero (custom-hero section) ---
+	 * Arteze palette. Bare OKLCH channels; inline consumers wrap with
+	 * `oklch(var(--hero-accent))` (see brand.css header). Cream overlay uses
+	 * `oklch(var(--hero-cream) / 0.45)` for the pattern panel scrim. */
+	--hero-cream: 0.976 0.0384 90.49; /* Overlay base (~#FAF7EE) */
+	--hero-ink: 0.234 0.0286 337.04; /* Heading (~#2C1810) */
+	--hero-accent: 0.6365 0.1754 339.46; /* Accent / em ~#E8503A */
+	--hero-taupe: 0.4518 0.0317 326.14; /* Subheading (~#6B4F3A) */
+
 	/* --- Typography: fluid type scale (rem + clamp) ---
 	 * Sized in rem so it respects the user's browser font size (a11y).
 	 * clamp() scales smoothly between mobile and desktop — no breakpoint jumps.
