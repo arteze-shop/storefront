@@ -8,7 +8,7 @@ import { shippingDeliveriesCacheKey } from "@/checkout/lib/shipping-deliveries";
 export function useShippingDeliveries(checkout: ServerCheckout | null, isActive: boolean) {
 	const [deliveries, setDeliveries] = useState<DeliveryOption[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
-	const loadedKeyRef = useRef<string | null>(null);
+	const [loadedKey, setLoadedKey] = useState<string | null>(null);
 	const prevStaleRef = useRef(false);
 
 	const isStale = hasStaleDeliveryProblem(checkout);
@@ -18,7 +18,7 @@ export function useShippingDeliveries(checkout: ServerCheckout | null, isActive:
 			if (!checkout) return;
 			const key = shippingDeliveriesCacheKey(checkout);
 			if (!key) return;
-			if (!force && loadedKeyRef.current === key) return;
+			if (!force && loadedKey === key) return;
 
 			setIsLoading(true);
 			try {
@@ -28,30 +28,37 @@ export function useShippingDeliveries(checkout: ServerCheckout | null, isActive:
 				} else {
 					setDeliveries([]);
 				}
-				loadedKeyRef.current = key;
+				setLoadedKey(key);
 			} finally {
 				setIsLoading(false);
 			}
 		},
-		[checkout],
+		[checkout, loadedKey],
 	);
 
 	useEffect(() => {
 		if (!isActive) return;
-		void loadDeliveries();
+		const id = setTimeout(() => {
+			void loadDeliveries();
+		}, 0);
+		return () => clearTimeout(id);
 	}, [isActive, loadDeliveries]);
 
 	useEffect(() => {
 		if (!isActive || !checkout) return;
 		if (isStale && !prevStaleRef.current) {
-			loadedKeyRef.current = null;
-			void loadDeliveries(true);
+			const id = setTimeout(() => {
+				setLoadedKey(null);
+				void loadDeliveries(true);
+			}, 0);
+			prevStaleRef.current = isStale;
+			return () => clearTimeout(id);
 		}
 		prevStaleRef.current = isStale;
 	}, [isStale, isActive, checkout, loadDeliveries]);
 
 	const cacheKey = isActive && checkout ? shippingDeliveriesCacheKey(checkout) : null;
-	const awaitingFetch = cacheKey !== null && loadedKeyRef.current !== cacheKey;
+	const awaitingFetch = cacheKey !== null && loadedKey !== cacheKey;
 
 	return { deliveries, isLoading: isLoading || awaitingFetch };
 }
