@@ -1,6 +1,6 @@
 {
-	"name": "Paper",
-	"short_name": "Paper",
+	"name": "Arteze Shop",
+	"short_name": "Arteze",
 	"icons": [
 		{
 			"src": "/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
 			"type": "image/png"
 		}
 	],
-	"theme_color": "#FAF9F7",
-	"background_color": "#FAF9F7",
+	"theme_color": "#6D1E31",
+	"background_color": "#F4F2C3",
 	"display": "standalone"
 }
