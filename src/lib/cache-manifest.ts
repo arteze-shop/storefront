@@ -116,6 +116,20 @@ const profiles = {
 		tagPattern: "shipping-methods:{channel}",
 		pathPattern: null,
 	},
+	blog: {
+		id: "blog",
+		label: "Blog Listings",
+		cacheProfile: "catalog",
+		tagPattern: "blog",
+		pathPattern: "/{locale}/{channel}/blog",
+	},
+	blogPost: {
+		id: "blog-post",
+		label: "Blog Post Pages",
+		cacheProfile: "catalog",
+		tagPattern: "blog:{slug}",
+		pathPattern: "/{locale}/{channel}/blog/{slug}",
+	},
 } as const satisfies Record<string, CacheProfile>;
 
 export const CACHE_PROFILES = profiles;
