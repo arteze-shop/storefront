@@ -8,6 +8,8 @@ import { executePublicGraphQL } from "@/lib/graphql";
 import { getPaginatedListVariables } from "@/lib/utils";
 import { buildBrowsePageMetadata } from "@/lib/seo";
 import { getStorefrontContent } from "@/lib/content/server";
+import { resolveChannelCurrency } from "@/lib/channels/resolve-channel-currency";
+import { resolveLocaleFromSlug } from "@/config/locale";
 import { CategoryHero, toProductCardData } from "@/ui/components/plp";
 import { buildSortVariables, buildFilterVariables } from "@/ui/components/plp/filter-utils";
 import { resolveCategorySlugsToIds } from "@/ui/components/plp/filter-utils.server";
@@ -72,6 +74,7 @@ export default async function Page(props: PageProps) {
 				description={productsCopy.description}
 				breadcrumbs={breadcrumbs}
 				breadcrumbAriaLabel={tNav("breadcrumbAriaLabel")}
+				// backgroundImage={productsCopy.image}
 			/>
 			{/* Dynamic content - streams in via Suspense */}
 			<Suspense fallback={<ProductsGridSkeleton />}>
@@ -92,6 +95,9 @@ async function ProductsContent({
 	searchParams: PageProps["searchParams"];
 }) {
 	const [params, searchParams] = await Promise.all([paramsPromise, searchParamsPromise]);
+
+	const currencyCode = await resolveChannelCurrency(params.channel);
+	const localeBcp47 = resolveLocaleFromSlug(params.locale).bcp47;
 
 	const paginationVariables = getPaginatedListVariables({ params: searchParams });
 	const sortBy = buildSortVariables(searchParams.sort);
@@ -137,6 +143,8 @@ async function ProductsContent({
 			pageInfo={products.pageInfo}
 			totalCount={products.totalCount ?? productCards.length}
 			resolvedCategories={resolvedCategories}
+			currencyCode={currencyCode}
+			localeBcp47={localeBcp47}
 		/>
 	);
 }

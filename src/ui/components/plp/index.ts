@@ -29,7 +29,10 @@ export {
 	// Constants
 	STATIC_PRICE_RANGES,
 	STATIC_PRICE_RANGES_WITH_COUNT,
+	buildStaticPriceRanges,
+	formatPriceRangeLabel,
 	// Types
 	type CategoryOption,
+	type PriceRange,
 } from "./filter-utils";
 export { useProductFilters } from "./use-product-filters";

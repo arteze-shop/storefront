@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
  * For tap-to-zoom controls, use {@link GalleryImageZoomTrigger} — never put
  * `overflow-hidden` on the same element that receives focus rings.
  */
-export const PDP_GALLERY_IMAGE_FRAME_CLASS = "relative isolate overflow-hidden rounded-lg bg-secondary";
+export const PDP_GALLERY_IMAGE_FRAME_CLASS = "relative isolate overflow-hidden rounded-lg bg-accent/10";
 
 /**
  * Inner clip layer for zoom triggers — inherits the trigger's border radius and
@@ -18,7 +18,7 @@ export const PDP_GALLERY_IMAGE_FRAME_CLASS = "relative isolate overflow-hidden r
  * on the button itself.
  */
 export const PDP_GALLERY_IMAGE_CLIP_CLASS =
-	"pointer-events-none absolute inset-0 isolate overflow-hidden rounded-[inherit] bg-secondary";
+	"pointer-events-none absolute inset-0 isolate overflow-hidden rounded-[inherit] bg-accent/10";
 
 /**
  * Focus indicator drawn as an inset overlay ON TOP of the image. Inset rings live

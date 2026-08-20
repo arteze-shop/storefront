@@ -2,7 +2,7 @@ import { formatMoney, formatMoneyRange } from "@/lib/utils";
 import { resolveLocaleFromSlug } from "@/config/locale";
 import { getDiscountInfo } from "@/lib/pricing";
 import { resolveChannelCurrency } from "@/lib/channels/resolve-channel-currency";
-import { getStorefrontContent } from "@/lib/content/server";
+import { getStorefrontContent, resolveFreeShippingThreshold } from "@/lib/content/server";
 import {
 	revalidateStorefrontBrowsePath,
 	revalidateStorefrontChrome,
@@ -41,10 +41,11 @@ export async function VariantSectionDynamic({
 }: VariantSectionDynamicProps) {
 	const { variant: variantParam } = await searchParams;
 	const intlLocale = resolveLocaleFromSlug(localeSlug).bcp47;
-	const [t, content, currency] = await Promise.all([
+	const [t, content, currency, freeShippingThreshold] = await Promise.all([
 		getTranslations({ locale: localeSlug, namespace: "pdp" }),
 		getStorefrontContent(channel, localeSlug),
 		resolveChannelCurrency(channel),
+		resolveFreeShippingThreshold(channel),
 	]);
 	const variants = product.variants || [];
 	const selectedVariantID = resolveSelectedVariantId(product, variantParam);
@@ -92,7 +93,6 @@ export async function VariantSectionDynamic({
 				)
 			: null;
 
-	const freeShippingThreshold = content.policies.shipping.freeShippingThreshold;
 	const freeShippingTrustLabel =
 		freeShippingThreshold != null
 			? `${content.surfaces.cart.trust.freeShippingPrefix} ${formatMoney(

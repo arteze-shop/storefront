@@ -30,7 +30,7 @@ import {
 	VariantSectionSkeleton,
 	VariantSectionError,
 	getDefaultGalleryImages,
-	PDP_GALLERY_LAYOUT,
+	// PDP_GALLERY_LAYOUT,
 	PDP_LAYOUT_CLASSES,
 } from "@/ui/components/pdp";
 
@@ -182,7 +182,7 @@ async function ProductShell({
 	// Reserve mobile dots / desktop thumbs in fallback when product has multiple images
 	const showGalleryChrome = defaultImages.length > 1;
 	const showBestsellerBadge = isBestseller(product);
-	const layout = PDP_LAYOUT_CLASSES[PDP_GALLERY_LAYOUT];
+	const layout = PDP_LAYOUT_CLASSES["mosaic"];
 	const { Fallback: GalleryFallback } = activeGalleryVariant();
 	const galleryFallback = lcpImage ? (
 		<GalleryFallback

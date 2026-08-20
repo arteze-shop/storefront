@@ -23,11 +23,11 @@ export interface BreadcrumbsProps {
  */
 export function Breadcrumbs({ items, ariaLabel, surface = "default", className }: BreadcrumbsProps) {
 	const isPill = surface === "pill";
-	const crumbClass = isPill ? "text-foreground" : "text-muted-foreground";
-	const currentClass = "font-medium text-foreground";
+	const crumbClass = isPill ? "text-foreground" : "text-secondary/70";
+	const currentClass = "text-secondary/70";
 	const linkClass = isPill
 		? "text-foreground transition-opacity hover:opacity-70"
-		: "text-muted-foreground transition-colors hover:text-foreground";
+		: "text-secondary/70 transition-colors hover:text-secondary/90";
 
 	return (
 		<nav

@@ -28,10 +28,57 @@ export interface CategoryOption {
 	count: number;
 }
 
+export interface PriceRange {
+	label: string;
+	value: string;
+	count: number;
+}
+
 // ============================================================================
 // Static Price Ranges (for server-side filtering)
 // ============================================================================
 
+/** Numeric price buckets — labels are formatted per channel currency at runtime. */
+const PRICE_BUCKETS = [
+	{ min: 0, max: 50, value: "0-50" },
+	{ min: 50, max: 100, value: "50-100" },
+	{ min: 100, max: 200, value: "100-200" },
+	{ min: 200, max: null, value: "200-" },
+] as const;
+
+/** Format a price bucket label in the channel currency (e.g. "Under AED 50", "AED 50 - AED 100"). */
+export function formatPriceRangeLabel(
+	min: number,
+	max: number | null,
+	currencyCode: string,
+	localeBcp47: string,
+): string {
+	const fmt = new Intl.NumberFormat(localeBcp47, {
+		style: "currency",
+		currency: currencyCode,
+		currencyDisplay: "narrowSymbol",
+		maximumFractionDigits: 0,
+	});
+
+	if (min === 0 && max !== null) {
+		return `Under ${fmt.format(max)}`;
+	}
+	if (max === null) {
+		return `${fmt.format(min)}+`;
+	}
+	return `${fmt.format(min)} - ${fmt.format(max)}`;
+}
+
+/** Build the static price ranges with labels formatted in the channel currency. */
+export function buildStaticPriceRanges(currencyCode: string, localeBcp47: string): PriceRange[] {
+	return PRICE_BUCKETS.map(({ min, max, value }) => ({
+		label: formatPriceRangeLabel(min, max, currencyCode, localeBcp47),
+		value,
+		count: 0,
+	}));
+}
+
+/** USD defaults — kept for backward compatibility and tests. Prefer {@link buildStaticPriceRanges}. */
 export const STATIC_PRICE_RANGES = [
 	{ label: "Under $50", value: "0-50" },
 	{ label: "$50 - $100", value: "50-100" },
@@ -227,11 +274,14 @@ export function sortProductsClientSide<T extends { price: number; createdAt?: st
  * Build active filters array for display.
  * Note: Categories are added separately from resolved server data.
  */
-export function buildActiveFilters(filters: {
-	colors?: string[];
-	sizes?: string[];
-	priceRange?: string | null;
-}): ActiveFilter[] {
+export function buildActiveFilters(
+	filters: {
+		colors?: string[];
+		sizes?: string[];
+		priceRange?: string | null;
+	},
+	format?: { currencyCode: string; localeBcp47: string },
+): ActiveFilter[] {
 	const active: ActiveFilter[] = [];
 
 	filters.colors?.forEach((color) => {
@@ -243,8 +293,16 @@ export function buildActiveFilters(filters: {
 	});
 
 	if (filters.priceRange) {
-		const [min, max] = filters.priceRange.split("-");
-		const label = max ? `$${min} - $${max}` : `$${min}+`;
+		const [minStr, maxStr] = filters.priceRange.split("-");
+		const min = parseFloat(minStr) || 0;
+		const max = maxStr ? parseFloat(maxStr) : null;
+
+		const label = format
+			? formatPriceRangeLabel(min, max, format.currencyCode, format.localeBcp47)
+			: maxStr
+				? `$${minStr} - $${maxStr}`
+				: `$${minStr}+`;
+
 		active.push({ key: "price", label: "Price", value: label });
 	}
 

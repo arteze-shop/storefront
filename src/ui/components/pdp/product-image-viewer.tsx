@@ -40,12 +40,6 @@ export function ProductImageViewer({
 	const hasMultiple = images.length > 1;
 
 	React.useEffect(() => {
-		if (open) {
-			setIndex(initialIndex);
-		}
-	}, [open, initialIndex]);
-
-	React.useEffect(() => {
 		transformRef.current?.resetTransform(0);
 	}, [index]);
 
@@ -93,7 +87,10 @@ export function ProductImageViewer({
 				<div className="relative isolate flex h-[100dvh] w-full flex-col overflow-hidden bg-background">
 					<header className="relative z-20 flex shrink-0 items-center justify-between px-4 pb-2 pt-4">
 						<Logo className="h-6 w-auto" ariaLabel="" />
-						<DialogCloseButton className="text-foreground hover:bg-accent" aria-label={t("close")} />
+						<DialogCloseButton
+							className="rounded-full text-foreground transition-colors hover:bg-primary/80 hover:text-background"
+							aria-label={t("close")}
+						/>
 					</header>
 
 					<div className="relative min-h-0 flex-1 touch-none">

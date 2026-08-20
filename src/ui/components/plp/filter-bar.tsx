@@ -115,7 +115,7 @@ export function FilterBar({
 		selectedCategories.length + selectedColors.length + selectedSizes.length + (selectedPriceRange ? 1 : 0);
 
 	return (
-		<div className="sticky top-16 z-30 border-b border-border bg-background">
+		<div className="sticky top-16 z-30 border-b border-secondary-foreground/30 bg-background">
 			<div className="container-content py-4">
 				{/* Main Filter Row */}
 				<div className="flex items-center justify-between gap-4">

@@ -14,6 +14,8 @@ import {
 	filterProducts,
 	sortProductsClientSide,
 	buildActiveFilters,
+	buildStaticPriceRanges,
+	formatPriceRangeLabel,
 	STATIC_PRICE_RANGES,
 	STATIC_PRICE_RANGES_WITH_COUNT,
 } from "./filter-utils";
@@ -370,6 +372,22 @@ describe("buildActiveFilters", () => {
 		expect(result).toEqual([{ key: "price", label: "Price", value: "$200+" }]);
 	});
 
+	it("formats price range in channel currency when format provided", () => {
+		const result = buildActiveFilters(
+			{ priceRange: "50-100" },
+			{ currencyCode: "AED", localeBcp47: "en-US" },
+		);
+
+		// Intl.NumberFormat uses a non-breaking space (U+00A0) between currency and amount.
+		expect(result).toEqual([{ key: "price", label: "Price", value: "AED\u00A050 - AED\u00A0100" }]);
+	});
+
+	it("formats open-ended price range in channel currency when format provided", () => {
+		const result = buildActiveFilters({ priceRange: "200-" }, { currencyCode: "BHD", localeBcp47: "en-US" });
+
+		expect(result).toEqual([{ key: "price", label: "Price", value: "BHD\u00A0200+" }]);
+	});
+
 	it("combines all filter types", () => {
 		const result = buildActiveFilters({
 			colors: ["Black"],
@@ -379,6 +397,53 @@ describe("buildActiveFilters", () => {
 
 		expect(result).toHaveLength(3);
 		expect(result.map((f) => f.key)).toEqual(["color", "size", "price"]);
+	});
+});
+
+// =============================================================================
+// formatPriceRangeLabel
+// =============================================================================
+describe("formatPriceRangeLabel", () => {
+	it("formats 'Under X' for a 0-min bucket", () => {
+		expect(formatPriceRangeLabel(0, 50, "USD", "en-US")).toBe("Under $50");
+	});
+
+	it("formats a min-max range in the channel currency", () => {
+		expect(formatPriceRangeLabel(50, 100, "AED", "en-US")).toBe("AED\u00A050 - AED\u00A0100");
+	});
+
+	it("formats an open-ended bucket with currency", () => {
+		expect(formatPriceRangeLabel(200, null, "BHD", "en-US")).toBe("BHD\u00A0200+");
+	});
+
+	it("supports non-US locales", () => {
+		expect(formatPriceRangeLabel(50, 100, "USD", "de-DE")).toBe("50\u00A0$ - 100\u00A0$");
+	});
+
+	it("rounds fractional currencies to whole amounts", () => {
+		expect(formatPriceRangeLabel(0, 50, "USD", "en-US")).toBe("Under $50");
+	});
+});
+
+// =============================================================================
+// buildStaticPriceRanges
+// =============================================================================
+describe("buildStaticPriceRanges", () => {
+	it("builds 4 price ranges with channel currency labels", () => {
+		const ranges = buildStaticPriceRanges("AED", "en-US");
+
+		expect(ranges).toHaveLength(4);
+		expect(ranges[0]).toEqual({ label: "Under AED\u00A050", value: "0-50", count: 0 });
+		expect(ranges[1]).toEqual({ label: "AED\u00A050 - AED\u00A0100", value: "50-100", count: 0 });
+		expect(ranges[2]).toEqual({ label: "AED\u00A0100 - AED\u00A0200", value: "100-200", count: 0 });
+		expect(ranges[3]).toEqual({ label: "AED\u00A0200+", value: "200-", count: 0 });
+	});
+
+	it("uses the provided locale for formatting", () => {
+		const ranges = buildStaticPriceRanges("USD", "de-DE");
+
+		expect(ranges[0].label).toBe("Under 50\u00A0$");
+		expect(ranges[3].label).toBe("200\u00A0$+");
 	});
 });
 

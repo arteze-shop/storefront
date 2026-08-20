@@ -15,6 +15,10 @@ interface ProductsPageClientProps {
 	totalCount?: number;
 	/** Categories resolved from URL slugs (server-side) for active filter display */
 	resolvedCategories?: Array<{ slug: string; id: string; name: string }>;
+	/** Channel currency code (e.g. `AED`, `USD`) for price filter labels */
+	currencyCode?: string;
+	/** BCP 47 locale for price label formatting */
+	localeBcp47?: string;
 }
 
 function PaginationSkeleton() {
@@ -26,7 +30,13 @@ function PaginationSkeleton() {
 	);
 }
 
-export function ProductsPageClient({ products, pageInfo, resolvedCategories = [] }: ProductsPageClientProps) {
+export function ProductsPageClient({
+	products,
+	pageInfo,
+	resolvedCategories = [],
+	currencyCode,
+	localeBcp47,
+}: ProductsPageClientProps) {
 	const {
 		filteredProducts,
 		categoryOptions,
@@ -50,6 +60,8 @@ export function ProductsPageClient({ products, pageInfo, resolvedCategories = []
 		products,
 		resolvedCategories,
 		enableCategoryFilter: true,
+		currencyCode,
+		localeBcp47,
 	});
 
 	return (

@@ -8,11 +8,13 @@ import {
 	extractColorOptions,
 	extractSizeOptions,
 	extractCategoryOptions,
-	STATIC_PRICE_RANGES_WITH_COUNT,
+	buildStaticPriceRanges,
 	filterProducts,
 	buildActiveFilters,
 	sortProductsClientSide,
+	STATIC_PRICE_RANGES_WITH_COUNT,
 	type CategoryOption,
+	type PriceRange,
 } from "./filter-utils";
 
 interface UseProductFiltersOptions {
@@ -21,6 +23,10 @@ interface UseProductFiltersOptions {
 	resolvedCategories?: Array<{ slug: string; id: string; name: string }>;
 	/** Whether to include category filter (only for /products page) */
 	enableCategoryFilter?: boolean;
+	/** Channel currency code (e.g. `AED`, `USD`) for price filter labels */
+	currencyCode?: string;
+	/** BCP 47 locale for price label formatting */
+	localeBcp47?: string;
 }
 
 interface UseProductFiltersResult {
@@ -31,7 +37,7 @@ interface UseProductFiltersResult {
 	categoryOptions: CategoryOption[];
 	colorOptions: Array<{ name: string; count: number; hex?: string }>;
 	sizeOptions: Array<{ name: string; count: number }>;
-	priceRanges: typeof STATIC_PRICE_RANGES_WITH_COUNT;
+	priceRanges: PriceRange[];
 
 	// Selected filter values
 	selectedCategories: string[];
@@ -64,6 +70,8 @@ export function useProductFilters({
 	products,
 	resolvedCategories = [],
 	enableCategoryFilter = false,
+	currencyCode,
+	localeBcp47,
 }: UseProductFiltersOptions): UseProductFiltersResult {
 	const router = useRouter();
 	const pathname = usePathname();
@@ -242,11 +250,14 @@ export function useProductFilters({
 
 	// Build active filters for display
 	const activeFilters = useMemo(() => {
-		const filters = buildActiveFilters({
-			colors: selectedColors,
-			sizes: selectedSizes,
-			priceRange: selectedPriceRange,
-		});
+		const filters = buildActiveFilters(
+			{
+				colors: selectedColors,
+				sizes: selectedSizes,
+				priceRange: selectedPriceRange,
+			},
+			currencyCode && localeBcp47 ? { currencyCode, localeBcp47 } : undefined,
+		);
 
 		// Add category filters from server-resolved data
 		resolvedCategories.forEach((cat) => {
@@ -254,14 +265,22 @@ export function useProductFilters({
 		});
 
 		return filters;
-	}, [selectedColors, selectedSizes, selectedPriceRange, resolvedCategories]);
+	}, [selectedColors, selectedSizes, selectedPriceRange, resolvedCategories, currencyCode, localeBcp47]);
+
+	const priceRanges = useMemo(
+		() =>
+			currencyCode && localeBcp47
+				? buildStaticPriceRanges(currencyCode, localeBcp47)
+				: STATIC_PRICE_RANGES_WITH_COUNT,
+		[currencyCode, localeBcp47],
+	);
 
 	return {
 		filteredProducts,
 		categoryOptions,
 		colorOptions,
 		sizeOptions,
-		priceRanges: STATIC_PRICE_RANGES_WITH_COUNT,
+		priceRanges,
 		selectedCategories,
 		selectedColors,
 		selectedSizes,
