@@ -240,14 +240,14 @@ models:
       Announcement ID: ""
       Announcement message: Free shipping on orders over {freeShippingThreshold}
       Announcement dismissible: true
-      Nav all products label: All
+      Nav all products label: Shop
       Nav view all label: View all {label}
   - title: Storefront Products
     slug: storefront-products
     modelType: Storefront — Products
     isPublished: true
     attributes:
-      Listing title: All Products
+      Listing title: The Shop
       Listing description: Discover our full collection of premium products.
   - title: Storefront Homepage
     slug: storefront-homepage
@@ -255,31 +255,27 @@ models:
     isPublished: true
     attributes:
       Hero eyebrow: ""
-      Hero heading: Discover our collection
-      Hero subheading: Premium products with exceptional quality. Discover our curated collection.
-      Hero CTA label: Shop all
-      Featured heading: Featured products
+      Hero heading: Home goods made by hand, with heart.
+      Hero subheading: Every rug, throw, and cushion cover at arteze is crafted by skilled artisans using
+        traditional techniques and natural materials. Built to last. Made to love.
+      Hero CTA label: Shop the Collection
+      Featured heading: New Arrivals
       Featured collection: featured-products
       Featured limit: 8
       Categories heading: Shop by category
-      Categories eyebrow: ""
-      Brand story heading: Built for real commerce
-      Brand story paragraph 1: Paper is a minimal, production-ready storefront for Saleor — clean as a
-        blank page, built to ship.
-      Brand story paragraph 2: Customize sections in code, connect your catalog, and keep checkout, cart,
-        and product pages battle-tested out of the box.
-      Values heading: Why shop with us
-      Values columns desktop: 3
+      Categories eyebrow: collections
+      Brand story heading: Preserving Heritage Through Slow Craft
+      Brand story paragraph 1: We don't manufacture; we curate. Arteze partners directly with artisan
+        communities across India and beyond, bringing their centuries-old techniques to the modern
+        home.
+      Brand story paragraph 2: From hand-carved block prints in Jaipur to pit-loom weaving in Rajasthan,
+        every piece in ourcollection is a testament to human skill and natural materials.
       Values column 1 title: Curated quality
       Values column 1 text: Every product is selected for craftsmanship and longevity — not trend-chasing.
-      Values column 2 title: Fast fulfillment
-      Values column 2 text: Orders ship from regional warehouses with tracking from checkout to delivery.
-      Values column 3 title: Easy returns
-      Values column 3 text: Hassle-free returns within {returnsWindowDays} days. We stand behind what we sell.
-      Editorial heading: Designed to last
-      Editorial paragraph 1: Thoughtful materials and timeless silhouettes — pieces you'll reach for season after season.
-      Editorial image position: right
-      Editorial CTA label: Explore collections
+      Values column 2 title: Natural materials
+      Values column 2 text: We use wool, cotton, linen and plant-based dyes sourced responsibly.
+      Values column 3 title: Fast fulfillment
+      Values column 3 text: Orders ship from regional warehouses with tracking from checkout to delivery.
       Photo credits: "[]"
   - title: Storefront Cart
     slug: storefront-cart

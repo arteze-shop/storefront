@@ -48,19 +48,34 @@ describe("mergeStorefrontContent", () => {
 		expect(merged.surfaces.homepage.brandStory.paragraphs).toEqual(["Only this paragraph"]);
 	});
 
-	it("keeps default paragraphs when override sends an empty array", () => {
-		const merged = mergeStorefrontContent(defaultStorefrontContent, {
-			surfaces: {
-				homepage: {
-					editorial: {
-						paragraphs: [],
+	it("keeps base editorial paragraphs when override sends an empty array", () => {
+		const merged = mergeStorefrontContent(
+			{
+				...defaultStorefrontContent,
+				surfaces: {
+					...defaultStorefrontContent.surfaces,
+					homepage: {
+						...defaultStorefrontContent.surfaces.homepage,
+						editorial: {
+							heading: "Default heading",
+							paragraphs: ["Default paragraph"],
+							imagePosition: "left",
+							ctaLabel: "Default CTA",
+						},
 					},
 				},
 			},
-		});
-
-		expect(merged.surfaces.homepage.editorial.paragraphs).toEqual(
-			defaultStorefrontContent.surfaces.homepage.editorial.paragraphs,
+			{
+				surfaces: {
+					homepage: {
+						editorial: {
+							paragraphs: [],
+						},
+					},
+				},
+			},
 		);
+
+		expect(merged.surfaces.homepage.editorial?.paragraphs).toEqual(["Default paragraph"]);
 	});
 });

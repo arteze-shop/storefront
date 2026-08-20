@@ -1,10 +1,10 @@
 import type { StorefrontContent } from "@/lib/content/types";
 
 type DeepPartial<T> = {
-	[P in keyof T]?: T[P] extends readonly (infer U)[]
-		? readonly U[]
-		: T[P] extends object
-			? DeepPartial<T[P]>
+	[P in keyof T]?: NonNullable<T[P]> extends readonly unknown[]
+		? NonNullable<T[P]>
+		: NonNullable<T[P]> extends object
+			? DeepPartial<NonNullable<T[P]>>
 			: T[P];
 };
 

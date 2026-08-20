@@ -82,21 +82,20 @@ export function mergeStorefrontContent(
 					...base.surfaces.homepage.newsletter,
 					...override.surfaces?.homepage?.newsletter,
 				},
-				// `editorial` is optional in HomepageContent — only emit it when base or
-				// override provides one. The base entry (when present) supplies the required
-				// fields; the override is a DeepPartial, so we assert the merged shape.
-				...(base.surfaces.homepage.editorial || override.surfaces?.homepage?.editorial
-					? {
-							editorial: {
+				// `editorial` is optional in HomepageContent — emit the merged shape only when
+				// base or override provides one. The base entry (when present) supplies the
+				// required fields; the override is a DeepPartial, so we assert the merged shape.
+				editorial:
+					base.surfaces.homepage.editorial || override.surfaces?.homepage?.editorial
+						? ({
 								...base.surfaces.homepage.editorial,
 								...override.surfaces?.homepage?.editorial,
 								paragraphs: coalesceArray(
 									override.surfaces?.homepage?.editorial?.paragraphs,
 									base.surfaces.homepage.editorial?.paragraphs ?? [],
 								),
-							} as HomepageEditorialContent,
-						}
-					: {}),
+							} as HomepageEditorialContent)
+						: undefined,
 			},
 			aboutpage: {
 				...base.surfaces.aboutpage,

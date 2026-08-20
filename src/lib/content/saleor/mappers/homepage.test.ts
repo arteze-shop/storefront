@@ -102,14 +102,12 @@ describe("mapHomepagePage", () => {
 		);
 	});
 
-	it("keeps default editorial paragraphs when only heading is set in Saleor", () => {
+	it("maps Saleor editorial section when only heading is set", () => {
 		const partial = mapHomepagePage(homepagePage([{ slug: "editorial-heading", plainText: "New story" }]));
 		const merged = mergeStorefrontContent(defaultStorefrontContent, partial);
 
-		expect(merged.surfaces.homepage.editorial.heading).toBe("New story");
-		expect(merged.surfaces.homepage.editorial.paragraphs).toEqual(
-			defaultStorefrontContent.surfaces.homepage.editorial.paragraphs,
-		);
+		expect(merged.surfaces.homepage.editorial?.heading).toBe("New story");
+		expect(merged.surfaces.homepage.editorial?.paragraphs).toEqual([]);
 	});
 
 	it("maps photo credits JSON from Saleor", () => {
