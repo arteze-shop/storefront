@@ -3,6 +3,15 @@ minimumReleaseAge: 1440 # 24h
 trustPolicy: no-downgrade
 trustPolicyExclude:
   - "semver@6.3.1"
+  - "semver@5.7.2"
+  - "eslint-import-resolver-typescript@3.10.1"
+  - "ua-parser-js@1.0.41"
+  - "pino@9.14.0"
+  - "groq@3.88.1-typegen-experimental.0"
+  - "@vercel/functions@3.9.3"
+  - "@vercel/oidc@3.8.4"
+  - "@vercel/cli-exec@1.0.1"
+  - "@vercel/cli-config@0.2.3"
 overrides:
   graphql: 16.8.1
   dset: ">=3.1.4"
@@ -10,3 +19,9 @@ overrides:
   "@babel/runtime": ">=7.26.10"
   "@babel/helpers": ">=7.26.10"
   "brace-expansion@>=2": ">=2.0.2"
+allowBuilds:
+  "@parcel/watcher": true
+  "@swc/core": true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
