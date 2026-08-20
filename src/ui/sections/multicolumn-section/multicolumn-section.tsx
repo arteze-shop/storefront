@@ -80,15 +80,17 @@ export function MulticolumnSection({
 			className={className}
 			aria-labelledby={heading ? headingId : undefined}
 		>
-			<SectionHeader
-				id={headingId}
-				eyebrow={eyebrow}
-				heading={heading}
-				intro={intro}
-				cta={cta}
-				align="center"
-				className="mb-12"
-			/>
+			{heading ? (
+				<SectionHeader
+					id={headingId}
+					eyebrow={eyebrow}
+					heading={heading}
+					intro={intro}
+					cta={cta}
+					align="center"
+					className="mb-12"
+				/>
+			) : null}
 			<ul className={cn("grid list-none gap-10 sm:grid-cols-2", desktopGridClassName[columnsDesktop])}>
 				{columns.map((column) => (
 					<li key={column.title} className="flex flex-col gap-4 text-center">

@@ -95,6 +95,7 @@ export function CategoryTileGrid({
 				heading={heading}
 				intro={intro}
 				cta={cta}
+				align="center"
 				className="mb-10"
 			/>
 			<ul className={cn("grid list-none gap-4 lg:gap-6", columnsClassName[columns])}>

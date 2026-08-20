@@ -17,6 +17,7 @@ export interface SectionHeaderProps {
 	cta?: SectionHeaderCta;
 	className?: string;
 	headingClassName?: string;
+	introClassName?: string;
 }
 
 /**
@@ -33,6 +34,7 @@ export function SectionHeader({
 	cta,
 	className,
 	headingClassName,
+	introClassName,
 }: SectionHeaderProps) {
 	if (!eyebrow && !heading && !intro && !cta) {
 		return null;
@@ -50,7 +52,9 @@ export function SectionHeader({
 			)}
 		>
 			<div className={cn(isCenter && "max-w-prose")}>
-				{eyebrow ? <p className="text-eyebrow uppercase text-muted-foreground">{eyebrow}</p> : null}
+				{eyebrow ? (
+					<p className="text-eyebrow font-medium uppercase tracking-[0.22em] text-primary">{eyebrow}</p>
+				) : null}
 				{heading ? (
 					<h2 id={id} className={cn("text-balance text-h2", eyebrow && "mt-3", headingClassName)}>
 						{heading}
@@ -59,9 +63,10 @@ export function SectionHeader({
 				{intro ? (
 					<p
 						className={cn(
-							"max-w-prose text-pretty text-lead text-muted-foreground",
+							"max-w-prose text-pretty text-muted-foreground",
 							(eyebrow || heading) && "mt-4",
 							isCenter && "mx-auto",
+							introClassName,
 						)}
 					>
 						{intro}
