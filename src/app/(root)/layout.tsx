@@ -18,7 +18,7 @@ export default function RootGroupLayout({ children }: { children: ReactNode }) {
 
 	return (
 		<html {...htmlProps}>
-			<body className="min-h-dvh font-sans">{children}</body>
+			<body className="min-h-dvh font-epilogue">{children}</body>
 		</html>
 	);
 }

@@ -18,7 +18,7 @@ export default function CheckoutLayout(props: { children: ReactNode }) {
 
 	return (
 		<html {...htmlProps}>
-			<body className="min-h-dvh font-sans">
+			<body className="min-h-dvh font-epilogue">
 				<main className="min-h-dvh">{props.children}</main>
 				<SpeedInsights />
 			</body>
