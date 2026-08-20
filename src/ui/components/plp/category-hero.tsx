@@ -2,7 +2,7 @@ import Image from "next/image";
 import { PLP_HERO_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import { Breadcrumbs, type BreadcrumbItem } from "@/ui/components/breadcrumbs";
-import { WavePattern } from "./wave-pattern";
+// import { WavePattern } from "./wave-pattern";
 
 export type { BreadcrumbItem };
 
@@ -24,7 +24,7 @@ export function CategoryHero({
 	const hasImage = !!backgroundImage;
 
 	return (
-		<section className="relative h-[340px] overflow-hidden border-b border-border">
+		<section className="relative h-[340px] overflow-hidden border-b border-secondary-foreground/30 bg-secondary-foreground">
 			{/* Background */}
 			<div className="absolute inset-0">
 				{hasImage ? (
@@ -41,7 +41,11 @@ export function CategoryHero({
 						<div className="absolute inset-0 bg-gradient-to-r from-foreground/70 via-foreground/40 to-transparent" />
 					</>
 				) : (
-					<WavePattern className="h-full w-full" />
+					<>
+						<div className="pattern-overlay-light absolute inset-0 opacity-10" />
+						<div className="absolute inset-0 bg-gradient-to-r from-foreground/70 via-foreground/40 to-transparent" />
+						{/* <WavePattern className="h-full w-full" /> */}
+					</>
 				)}
 			</div>
 
@@ -50,18 +54,23 @@ export function CategoryHero({
 				<Breadcrumbs
 					items={breadcrumbs}
 					ariaLabel={breadcrumbAriaLabel}
-					surface={hasImage ? "pill" : "default"}
+					// surface={hasImage ? "pill" : "default"}
+					surface={"default"}
 					className="mb-4"
 				/>
 
-				<h1 className={cn("text-balance text-h1", hasImage ? "text-background" : "text-foreground")}>
+				<h1
+					// className={cn("text-balance text-h1", hasImage ? "text-background" : "text-secondary-foreground")}
+					className="text-balance text-h1 !font-light text-background"
+				>
 					{title}
 				</h1>
 				{description && (
 					<p
 						className={cn(
 							"mt-5 max-w-lg text-pretty text-lead",
-							hasImage ? "text-background" : "text-muted-foreground",
+							// hasImage ? "text-background" : "text-secondary-foreground/80",
+							"text-background",
 						)}
 					>
 						{description}

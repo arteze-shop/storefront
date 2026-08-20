@@ -25,8 +25,8 @@ export function WavePattern({ className }: WavePatternProps) {
 			xmlns="http://www.w3.org/2000/svg"
 			preserveAspectRatio="xMidYMid slice"
 		>
-			<rect width="1440" height="400" fill="currentColor" className="text-secondary" />
-			<g stroke="currentColor" className="text-foreground" fill="none" strokeWidth="1">
+			<rect width="1440" height="400" fill="currentColor" className="text-background" />
+			<g stroke="currentColor" className="text-primary" fill="none" strokeWidth="3">
 				{[...Array(6)].map((_, i) => (
 					<path key={i} d={generateSimpleContour(150 + i * 20, 30 - i * 3)} opacity={0.08 - i * 0.01} />
 				))}

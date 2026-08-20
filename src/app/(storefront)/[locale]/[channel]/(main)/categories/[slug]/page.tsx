@@ -9,6 +9,8 @@ import { getCategoryData } from "@/lib/catalog/get-category-data";
 import { getPaginatedListVariables } from "@/lib/utils";
 import { parseEditorJSToText } from "@/lib/editorjs";
 import { buildBrowsePageMetadata } from "@/lib/seo";
+import { resolveChannelCurrency } from "@/lib/channels/resolve-channel-currency";
+import { resolveLocaleFromSlug } from "@/config/locale";
 import { CategoryHero, ProductsGridSkeleton, toProductCardData } from "@/ui/components/plp";
 import { buildSortVariables, buildFilterVariables } from "@/ui/components/plp/filter-utils";
 import { buildStorefrontPath } from "@/lib/storefront-path";
@@ -104,6 +106,9 @@ async function CategoryProducts({
 }) {
 	const [params, searchParams] = await Promise.all([paramsPromise, searchParamsPromise]);
 
+	const currencyCode = await resolveChannelCurrency(params.channel);
+	const localeBcp47 = resolveLocaleFromSlug(params.locale).bcp47;
+
 	const paginationVariables = getPaginatedListVariables({ params: searchParams });
 	const sortBy = buildSortVariables(searchParams.sort);
 	const filter = buildFilterVariables({ priceRange: searchParams.price });
@@ -131,6 +136,8 @@ async function CategoryProducts({
 			products={productCards}
 			pageInfo={products.pageInfo}
 			totalCount={products.totalCount ?? productCards.length}
+			currencyCode={currencyCode}
+			localeBcp47={localeBcp47}
 		/>
 	);
 }

@@ -13,6 +13,10 @@ interface CollectionPageClientProps {
 		endCursor?: string | null;
 	};
 	totalCount?: number;
+	/** Channel currency code (e.g. `AED`, `USD`) for price filter labels */
+	currencyCode?: string;
+	/** BCP 47 locale for price label formatting */
+	localeBcp47?: string;
 }
 
 function PaginationSkeleton() {
@@ -24,7 +28,12 @@ function PaginationSkeleton() {
 	);
 }
 
-export function CollectionPageClient({ products, pageInfo }: CollectionPageClientProps) {
+export function CollectionPageClient({
+	products,
+	pageInfo,
+	currencyCode,
+	localeBcp47,
+}: CollectionPageClientProps) {
 	const {
 		filteredProducts,
 		colorOptions,
@@ -41,7 +50,7 @@ export function CollectionPageClient({ products, pageInfo }: CollectionPageClien
 		handleSortChange,
 		handleRemoveFilter,
 		handleClearFilters,
-	} = useProductFilters({ products });
+	} = useProductFilters({ products, currencyCode, localeBcp47 });
 
 	return (
 		<>
