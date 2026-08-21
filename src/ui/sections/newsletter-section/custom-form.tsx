@@ -43,7 +43,11 @@ export function NewsletterSectionForm({}: FormProps) {
 
 	return (
 		<>
-			<form onSubmit={handleSubmit(onSubmit)} className="mx-auto mt-5 flex max-w-sm gap-3" noValidate>
+			<form
+				onSubmit={handleSubmit(onSubmit)}
+				className="mx-auto mt-5 flex max-w-sm flex-col gap-3 md:flex-row"
+				noValidate
+			>
 				<input
 					id="email"
 					type="email"
@@ -54,7 +58,7 @@ export function NewsletterSectionForm({}: FormProps) {
 				<Button
 					type="submit"
 					disabled={isSubmitting}
-					className="h-auto rounded-full px-7 py-3.5 text-sm font-semibold"
+					className="mx-auto h-auto rounded-full px-7 py-3.5 text-sm font-semibold"
 				>
 					{isSubmitting ? <Loader className="h-5 w-5 animate-spin" /> : "Subscribe"}
 				</Button>
