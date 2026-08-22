@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { PDP_MAIN_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "@/lib/images";
 import { NavHrefLink } from "@/ui/atoms/nav-href-link";
 import { buttonClassName } from "@/ui/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -79,11 +81,14 @@ export function CustomHero({
 			{/* Hero image (right half) */}
 			{image ? (
 				<div className="absolute bottom-0 right-0 top-0 hidden w-[48%] overflow-hidden md:block">
-					<img
+					<Image
 						src={image}
 						alt={imageAlt}
-						className="h-full w-full object-cover mix-blend-multiply"
-						style={{ opacity: 0.85 }}
+						fill
+						className="h-full w-full object-cover opacity-85 mix-blend-multiply"
+						sizes={PDP_MAIN_IMAGE_SIZES}
+						quality={PRODUCT_IMAGE_QUALITY}
+						priority
 					/>
 				</div>
 			) : null}
@@ -102,12 +107,7 @@ export function CustomHero({
 						with heart.
 					</h1>
 					{subheading ? (
-						<p
-							className="mb-8 max-w-md text-base leading-relaxed text-muted-foreground"
-							// style={{ color: "oklch(var(--hero-taupe))" }}
-						>
-							{subheading}
-						</p>
+						<p className="mb-8 max-w-md text-base leading-relaxed text-muted-foreground">{subheading}</p>
 					) : null}
 					{(primaryCta || secondaryCta) && (
 						<div className="mt-9 flex flex-wrap gap-3">

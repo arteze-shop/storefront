@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { PDP_MAIN_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "@/lib/images";
 import { NavHrefLink } from "@/ui/atoms/nav-href-link";
 import { SectionHeader } from "@/ui/sections/section-header";
 import { buttonClassName } from "@/ui/components/ui/button";
@@ -87,7 +89,16 @@ export function BlogSection({ post, heading, subHeading, cta }: BlogSectionProps
 					</div>
 					<div className="order-1 md:order-2">
 						{post.imageUrl && (
-							<img src={post.imageUrl} alt={post.title} className="aspect-[4/3] w-full object-cover" />
+							<Image
+								src={post.imageUrl}
+								alt={post.title}
+								width={100}
+								height={100}
+								className="aspect-[4/3] w-full object-cover"
+								sizes={PDP_MAIN_IMAGE_SIZES}
+								quality={PRODUCT_IMAGE_QUALITY}
+								preload
+							/>
 						)}
 					</div>
 				</div>

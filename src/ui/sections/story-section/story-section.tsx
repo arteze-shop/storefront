@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { PDP_MAIN_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import { NavHrefLink } from "@/ui/atoms/nav-href-link";
 import { buttonClassName } from "@/ui/components/ui/button";
@@ -56,9 +58,18 @@ export function StorySection({
 
 			<div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-20">
-					<div className="w-full lg:w-1/2">
+					<div className="w-full overflow-hidden lg:w-1/2">
 						{image ? (
-							<img src={image} alt={imageAlt} className="aspect-[4/5] w-full object-cover shadow-xl" />
+							<Image
+								src={image}
+								alt={imageAlt ?? ""}
+								width={100}
+								height={100}
+								className="aspect-[4/5] w-full object-cover shadow-xl"
+								sizes={PDP_MAIN_IMAGE_SIZES}
+								quality={PRODUCT_IMAGE_QUALITY}
+								preload
+							/>
 						) : null}
 					</div>
 					<div className="w-full space-y-6 lg:w-1/2">
