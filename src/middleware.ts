@@ -6,6 +6,8 @@ import { BROWSE_LOCALE_COOKIE, getBrowseLocaleCookieOptions } from "@/lib/browse
 import { buildStorefrontPath } from "@/lib/storefront-path";
 import { geolocation } from "@vercel/functions";
 
+const MIDDLEWARE_COOKIE_NAME = "x-middleware-processed";
+
 const RESERVED_ROOT_SEGMENTS = new Set([
 	"api",
 	"checkout",
@@ -102,6 +104,15 @@ export function middleware(request: NextRequest) {
 		return NextResponse.next();
 	}
 
+	// Check if this request already went through middleware
+	const processed = request.cookies.get(MIDDLEWARE_COOKIE_NAME)?.value;
+	if (processed === "true") {
+		// Clear the cookie and proceed
+		const response = NextResponse.next();
+		response.cookies.delete(MIDDLEWARE_COOKIE_NAME);
+		return response;
+	}
+
 	const segments = pathname.split("/").filter(Boolean);
 	const defaultLocale = getDefaultLocaleSlug();
 	const defaultChannel = DefaultChannelSlug ?? getStaticStorefrontChannelSlugs()[0];
@@ -112,23 +123,28 @@ export function middleware(request: NextRequest) {
 			return NextResponse.next();
 		}
 
-		// Try to detect channel from location <-- NEW
+		// Try to detect channel from location
 		const detectedChannel = getChannelFromLocation(request);
 		const targetChannel = detectedChannel || defaultChannel;
 
 		const url = request.nextUrl.clone();
-		// url.pathname = buildStorefrontPath(defaultLocale, defaultChannel); // <-- OLD
-		url.pathname = buildStorefrontPath(defaultLocale, targetChannel); // <-- NEW
+		url.pathname = buildStorefrontPath(defaultLocale, targetChannel);
 
-		// Store the detected channel in a cookie for analytics/debugging <-- NEW
+		// Store the detected channel in a cookie for analytics/debugging
 		const response = NextResponse.redirect(url, 307);
+		response.cookies.set(BROWSE_LOCALE_COOKIE, defaultLocale, getBrowseLocaleCookieOptions());
 		response.cookies.set("x-detected-channel", targetChannel, {
 			maxAge: 60 * 60 * 24, // 1 day
 			path: "/",
 			sameSite: "lax",
 		});
+		response.cookies.set("x-redirecting", "true", {
+			maxAge: 5,
+			path: "/",
+			sameSite: "lax",
+		});
 
-		return withBrowseLocaleCookie(request, NextResponse.redirect(url, 307), defaultLocale);
+		return response;
 	}
 
 	const [first, second, ...rest] = segments;
