@@ -1,6 +1,6 @@
 import { CACHE_PROFILES, applyCacheProfile } from "@/lib/cache-manifest";
 import { sanityFetch } from "@/sanity/live";
-import { POST_QUERY, POSTS_QUERY } from "@/sanity/queries";
+import { POST_QUERY, POSTS_QUERY, featuredPostByRegionQuery, type PostRegion } from "@/sanity/queries";
 import type { SanityPostDetail, SanityPostSummary } from "@/sanity/types";
 
 /**
@@ -32,5 +32,25 @@ export async function getBlogPosts(): Promise<SanityPostSummary[]> {
 	} catch (error) {
 		console.error("[getBlogPosts] Failed to fetch posts:", error);
 		return [];
+	}
+}
+
+/**
+ * Newest featured post for a storefront region — powers the homepage blog section.
+ * Cached and failure-safe so the PPR island can never crash the page mid-stream.
+ */
+export async function getFeaturedBlogPost(region: PostRegion): Promise<SanityPostSummary | null> {
+	"use cache";
+	applyCacheProfile(CACHE_PROFILES.blog);
+
+	try {
+		const { data } = await sanityFetch<SanityPostSummary>({
+			query: featuredPostByRegionQuery(region),
+			params: region ? { region } : {},
+		});
+		return data;
+	} catch (error) {
+		console.error("[getFeaturedBlogPost] Failed to fetch featured post:", error);
+		return null;
 	}
 }

@@ -1,6 +1,13 @@
 import { Suspense } from "react";
 import { brandConfig } from "@/config/brand";
 import { resolveLocaleFromSlug } from "@/config/locale";
+import {
+	BlogSection,
+	BlogSectionSkeleton,
+	type BlogSectionPost,
+} from "@/ui/sections/blog-section/blog-section";
+import { getFeaturedBlogPost } from "@/lib/blog/get-blog-data";
+import { resolveRegionFromChannel } from "@/sanity/queries";
 import { getFeaturedProducts } from "@/lib/catalog/get-featured-products";
 import { resolveChannelCurrency } from "@/lib/channels/resolve-channel-currency";
 import { buildPolicyLabelValues } from "@/lib/content";
@@ -11,27 +18,13 @@ import { FeaturedCollectionSection } from "@/ui/sections/featured-collection-sec
 import { StorySection } from "@/ui/sections/story-section/story-section";
 import { NewsletterSection } from "@/ui/sections/newsletter-section/newsletter-section";
 import { CustomHero } from "@/ui/sections/custom-hero/custom-hero";
-import {
-	BlogSection,
-	BlogSectionSkeleton,
-	type BlogSectionPost,
-} from "@/ui/sections/blog-section/blog-section";
-import { sanityFetch } from "@/sanity/live";
-import { featuredPostByRegionQuery, resolveRegionFromChannel } from "@/sanity/queries";
-import type { SanityPostSummary } from "@/sanity/types";
 import { HandHeart, Leaf, Truck, RotateCcw, LucideIcon } from "lucide-react";
 
 export const metadata = {
 	description: brandConfig.description,
 };
 
-// const HERO_SLUG_HINT = /shoe|plimsoll|sneaker|trainer|runner|force|boot/i;
 type FeaturedProduct = Awaited<ReturnType<typeof getFeaturedProducts>>[number];
-
-// function pickImage(product: FeaturedProduct | undefined) {
-// 	if (!product?.thumbnail?.url) return null;
-// 	return { url: product.thumbnail.url, alt: product.thumbnail.alt || product.name || "" };
-// }
 
 const valueIcons = {
 	"Curated quality": HandHeart,
@@ -71,11 +64,7 @@ function buildCategoryTiles(products: readonly FeaturedProduct[], max = 3): Cate
 }
 
 async function BlogSectionSlot({ channel }: { channel: string }) {
-	const region = resolveRegionFromChannel(channel);
-	const { data: featuredPostData } = await sanityFetch<SanityPostSummary>({
-		query: featuredPostByRegionQuery(region),
-		params: region ? { region } : {},
-	});
+	const featuredPostData = await getFeaturedBlogPost(resolveRegionFromChannel(channel));
 	const featuredPost: BlogSectionPost | null = featuredPostData
 		? {
 				title: featuredPostData.title,
