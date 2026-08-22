@@ -32,7 +32,6 @@ const ANONYMOUS_FINGERPRINT = "anonymous";
 let chromeFingerprint: string | null = null;
 let lastVisibilityCheckAt = 0;
 let isChromeCheckInFlight = false;
-let hasInitializedFingerprint = false;
 
 async function syncChromeIfChanged(channel: string, router: ReturnType<typeof useRouter>) {
 	if (isChromeCheckInFlight) {
@@ -76,7 +75,6 @@ export function HeaderAuthRefresh({ channel, children }: { channel: string; chil
 		void getChromeFingerprint().then((fingerprint) => {
 			const previous = chromeFingerprint;
 			chromeFingerprint = fingerprint;
-			hasInitializedFingerprint = true;
 			if (previous === null || previous === ANONYMOUS_FINGERPRINT) {
 				// Only set the timestamp, don't refresh
 				lastVisibilityCheckAt = Date.now();
