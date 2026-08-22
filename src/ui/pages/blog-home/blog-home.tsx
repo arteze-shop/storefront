@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { PDP_MAIN_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "@/lib/images";
 import { ArrowRight } from "lucide-react";
 import { buildStorefrontPath } from "@/lib/storefront-path";
 
@@ -45,10 +47,15 @@ export function BlogHome({ featuredPost, posts, locale, channel }: BlogHomeProps
 							className="group grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16"
 						>
 							<div className="aspect-[4/3] overflow-hidden bg-muted lg:aspect-auto lg:h-[500px]">
-								<img
+								<Image
 									src={featuredPost.imageUrl ?? ""}
 									alt={featuredPost.title}
+									width={100}
+									height={100}
 									className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+									sizes={PDP_MAIN_IMAGE_SIZES}
+									quality={PRODUCT_IMAGE_QUALITY}
+									priority
 								/>
 							</div>
 							<div className="flex flex-col justify-center">
@@ -85,10 +92,15 @@ export function BlogHome({ featuredPost, posts, locale, channel }: BlogHomeProps
 						<div key={post._id}>
 							<Link href={buildStorefrontPath(locale, channel, `/blog/${post.slug}`)} className="group block">
 								<div className="mb-6 aspect-[4/3] overflow-hidden bg-muted">
-									<img
+									<Image
 										src={post.imageUrl ?? ""}
 										alt={post.title}
+										width={100}
+										height={100}
 										className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+										sizes={PDP_MAIN_IMAGE_SIZES}
+										quality={PRODUCT_IMAGE_QUALITY}
+										preload
 									/>
 								</div>
 								<div className="mb-3 flex items-center space-x-4 text-xs">

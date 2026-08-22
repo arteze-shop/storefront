@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { PDP_MAIN_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "@/lib/images";
 import { PortableText, type PortableTextBlock } from "@portabletext/react";
 import { ChevronLeft, Facebook, Twitter, Linkedin } from "lucide-react";
 import { buildStorefrontPath } from "@/lib/storefront-path";
@@ -38,7 +40,19 @@ export function BlogPost({ post, relatedPosts, locale, channel }: BlogPostProps)
 	return (
 		<article className="w-full pb-20">
 			<div className="relative h-[60vh] min-h-[400px] w-full">
-				{post.imageUrl && <img src={post.imageUrl} alt={post.title} className="h-full w-full object-cover" />}
+				{post.imageUrl && (
+					<Image
+						src={post.imageUrl}
+						alt={post.title}
+						width={100}
+						height={100}
+						// fill
+						className="h-full w-full object-cover"
+						sizes={PDP_MAIN_IMAGE_SIZES}
+						quality={PRODUCT_IMAGE_QUALITY}
+						preload
+					/>
+				)}
 				<div className="absolute inset-0 bg-black/20" />
 			</div>
 
@@ -108,10 +122,15 @@ export function BlogPost({ post, relatedPosts, locale, channel }: BlogPostProps)
 								className="group block"
 							>
 								<div className="mb-4 aspect-[16/9] overflow-hidden bg-muted">
-									<img
+									<Image
 										src={related.imageUrl ?? ""}
 										alt={related.title}
+										width={100}
+										height={100}
 										className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+										sizes={PDP_MAIN_IMAGE_SIZES}
+										quality={PRODUCT_IMAGE_QUALITY}
+										preload
 									/>
 								</div>
 								<h4 className="font-fraunces text-xl text-foreground transition-colors group-hover:text-primary">
