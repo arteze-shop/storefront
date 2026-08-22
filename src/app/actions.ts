@@ -1,5 +1,6 @@
 "use server";
 
+import { createHash } from "node:crypto";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { getStaticStorefrontChannelSlugs } from "@/config/channels";
@@ -21,6 +22,29 @@ function revalidateCart(channel: string) {
 /** Invalidate cached storefront chrome (header + checkout shell). Server actions only — not during RSC render. */
 export async function revalidateStorefrontChromeAction(channel: string) {
 	revalidateStorefrontChrome(channel);
+}
+
+/**
+ * Cheap fingerprint of cookies that define storefront chrome identity (auth session
+ * + per-channel checkout). Lets the client gate `revalidateStorefrontChrome` /
+ * `router.refresh()` on actual cross-tab session changes instead of firing them
+ * on every visibility flip. Pure read — no GraphQL, no revalidation.
+ */
+export async function getChromeFingerprint(): Promise<string> {
+	const cookieStore = await cookies();
+	const matching = cookieStore
+		.getAll()
+		.filter((cookie) => cookie.name.includes("saleor_auth") || cookie.name.startsWith("checkoutId-"))
+		.sort((a, b) => a.name.localeCompare(b.name));
+
+	if (matching.length === 0) {
+		return "anonymous";
+	}
+
+	return createHash("sha256")
+		.update(matching.map((cookie) => `${cookie.name}=${cookie.value}`).join(";"))
+		.digest("hex")
+		.slice(0, 12);
 }
 
 /**
