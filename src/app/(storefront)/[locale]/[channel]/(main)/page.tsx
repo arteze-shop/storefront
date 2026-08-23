@@ -21,6 +21,7 @@ import { CustomHero } from "@/ui/sections/custom-hero/custom-hero";
 import { HandHeart, Leaf, Truck, RotateCcw, LucideIcon } from "lucide-react";
 
 export const metadata = {
+	title: "Home",
 	description: brandConfig.description,
 };
 
