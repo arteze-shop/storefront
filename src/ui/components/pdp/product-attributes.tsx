@@ -1,6 +1,6 @@
 "use client";
 
-import { Shirt, Leaf, Droplets, Ruler, Sparkles } from "lucide-react";
+import { SwatchBook, Leaf, Droplets, Ruler, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import {
 	Accordion,
@@ -30,7 +30,7 @@ interface ProductAttributesProps {
 
 // Map attribute names to icons (English defaults; icons are decorative only)
 const attributeIcons: Record<string, ReactNode> = {
-	Material: <Shirt className="h-4 w-4" />,
+	Material: <SwatchBook className="h-4 w-4" />,
 	"Made with Recycled Fibers": <Leaf className="h-4 w-4" />,
 	Waterproof: <Droplets className="h-4 w-4" />,
 	Fit: <Ruler className="h-4 w-4" />,
