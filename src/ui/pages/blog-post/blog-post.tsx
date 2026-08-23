@@ -2,8 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { PDP_MAIN_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "@/lib/images";
 import { PortableText, type PortableTextBlock } from "@portabletext/react";
-import { ChevronLeft, Facebook, Twitter, Linkedin } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { buildStorefrontPath } from "@/lib/storefront-path";
+import { PostShareButtons } from "@/ui/components/post-share-buttons";
 
 export interface BlogPostDetail {
 	_id: string;
@@ -86,27 +87,7 @@ export function BlogPost({ post, relatedPosts, locale, channel }: BlogPostProps)
 							<ChevronLeft className="mr-2 h-4 w-4" /> Back to Journal
 						</Link>
 
-						<div className="flex items-center space-x-4">
-							<span className="text-sm font-light text-foreground/60">Share:</span>
-							<button
-								className="text-foreground transition-colors hover:text-primary"
-								aria-label="Share on Facebook"
-							>
-								<Facebook className="h-4 w-4" />
-							</button>
-							<button
-								className="text-foreground transition-colors hover:text-primary"
-								aria-label="Share on Twitter"
-							>
-								<Twitter className="h-4 w-4" />
-							</button>
-							<button
-								className="text-foreground transition-colors hover:text-primary"
-								aria-label="Share on LinkedIn"
-							>
-								<Linkedin className="h-4 w-4" />
-							</button>
-						</div>
+						<PostShareButtons title={post.title} />
 					</div>
 				</div>
 			</div>
