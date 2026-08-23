@@ -11,7 +11,7 @@ import { ProductDetailsDocument, type ProductDetailsQuery } from "@/gql/graphql"
 import { resolveLocaleFromSlug } from "@/config/locale";
 import { resolveChannelCurrency } from "@/lib/channels/resolve-channel-currency";
 import { buildPolicyLabelValues } from "@/lib/content";
-import { getStorefrontContent } from "@/lib/content/server";
+import { getStorefrontContent, resolveFreeShippingThreshold } from "@/lib/content/server";
 import { buildBrowsePageMetadata, buildProductJsonLd, jsonLdScriptProps } from "@/lib/seo";
 import { CACHE_PROFILES, applyCacheProfile } from "@/lib/cache-manifest";
 import { graphqlLanguageCodeVariables } from "@/lib/graphql-locale";
@@ -131,14 +131,21 @@ async function ProductShell({
 }) {
 	const params = await paramsPromise;
 	const browse = (suffix: string) => buildStorefrontPath(params.locale, params.channel, suffix);
-	const [product, tPdp, tNav, content, currency] = await Promise.all([
+	const [product, tPdp, tNav, content, currency, liveThreshold] = await Promise.all([
 		getProductData(params.slug, params.channel, params.locale),
 		getTranslations({ locale: params.locale, namespace: "pdp" }),
 		getTranslations({ locale: params.locale, namespace: "nav" }),
 		getStorefrontContent(params.channel, params.locale),
 		resolveChannelCurrency(params.channel),
+		resolveFreeShippingThreshold(params.channel),
 	]);
-	const policyLabels = buildPolicyLabelValues(content.policies, {
+	const contentPolicies = {
+		...content.policies,
+		shipping: {
+			freeShippingThreshold: liveThreshold ?? content.policies.shipping.freeShippingThreshold ?? "",
+		},
+	};
+	const policyLabels = buildPolicyLabelValues(contentPolicies, {
 		currency,
 		locale: resolveLocaleFromSlug(params.locale).bcp47,
 	});
