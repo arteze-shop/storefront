@@ -1,8 +1,7 @@
-"use client";
-
 import { getCopyrightText } from "@/config/brand";
 
-/** Client component for copyright text (needs current year) */
+const COPYRIGHT_TEXT = getCopyrightText();
+
 export function CopyrightText() {
-	return <>{getCopyrightText()}</>;
+	return <>{COPYRIGHT_TEXT}</>;
 }

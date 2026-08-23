@@ -1,7 +1,9 @@
 import Link from "next/link";
 import type { MenuItem } from "@/lib/menus/get-menu-data";
-import { LinkWithChannel } from "@/ui/atoms/link-with-channel";
-import { NavHrefLink } from "@/ui/atoms/nav-href-link";
+import { isExternalMenuHref } from "@/lib/menus/menu-item-utils";
+import { isSafeNavHref } from "@/lib/url/safe-href";
+import { buildStorefrontPath } from "@/lib/storefront-path";
+import { cn } from "@/lib/utils";
 
 const defaultFooterLinks = {
 	support: [
@@ -18,54 +20,85 @@ const defaultFooterLinks = {
 	],
 };
 
-function FooterMenuChildLink({ child }: { child: MenuItem }) {
+interface FooterMenuLinksProps {
+	locale?: string;
+	channel?: string;
+}
+
+function ChannelLink({
+	href,
+	locale,
+	channel,
+	className,
+	children,
+}: FooterMenuLinksProps & { href: string; className?: string; children: React.ReactNode }) {
+	if (!isSafeNavHref(href)) {
+		return <span className={cn(className)}>{children}</span>;
+	}
+	if (isExternalMenuHref(href)) {
+		return (
+			<a href={href} rel="noopener noreferrer" className={className}>
+				{children}
+			</a>
+		);
+	}
+	const fullHref = locale && channel ? buildStorefrontPath(locale, channel, href) : href;
+	return (
+		<Link href={fullHref} prefetch={false} className={className}>
+			{children}
+		</Link>
+	);
+}
+
+function FooterMenuChildLink({ child, locale, channel }: FooterMenuLinksProps & { child: MenuItem }) {
+	const linkClassName = "text-sm text-inverse-subtle transition-colors hover:text-secondary";
 	if (child.category) {
 		return (
-			<LinkWithChannel
+			<ChannelLink
 				href={`/categories/${child.category.slug}`}
-				prefetch={false}
-				className="text-sm text-inverse-subtle transition-colors hover:text-secondary"
+				locale={locale}
+				channel={channel}
+				className={linkClassName}
 			>
 				{child.category.name}
-			</LinkWithChannel>
+			</ChannelLink>
 		);
 	}
 	if (child.collection) {
 		return (
-			<LinkWithChannel
+			<ChannelLink
 				href={`/collections/${child.collection.slug}`}
-				prefetch={false}
-				className="text-sm text-inverse-subtle transition-colors hover:text-secondary"
+				locale={locale}
+				channel={channel}
+				className={linkClassName}
 			>
 				{child.collection.name}
-			</LinkWithChannel>
+			</ChannelLink>
 		);
 	}
 	if (child.page) {
 		return (
-			<LinkWithChannel
+			<ChannelLink
 				href={`/pages/${child.page.slug}`}
-				prefetch={false}
-				className="text-sm text-inverse-subtle transition-colors hover:text-secondary"
+				locale={locale}
+				channel={channel}
+				className={linkClassName}
 			>
 				{child.page.title}
-			</LinkWithChannel>
+			</ChannelLink>
 		);
 	}
 	if (child.url) {
 		return (
-			<NavHrefLink
-				href={child.url}
-				className="text-sm text-inverse-subtle transition-colors hover:text-secondary"
-			>
+			<ChannelLink href={child.url} locale={locale} channel={channel} className={linkClassName}>
 				{child.name}
-			</NavHrefLink>
+			</ChannelLink>
 		);
 	}
 	return null;
 }
 
-export function FooterMenuColumns({ items }: { items: MenuItem[] }) {
+export function FooterMenuColumns({ items, locale, channel }: FooterMenuLinksProps & { items: MenuItem[] }) {
 	if (items.length === 0) {
 		return (
 			<>
@@ -113,7 +146,7 @@ export function FooterMenuColumns({ items }: { items: MenuItem[] }) {
 					<ul className="space-y-2">
 						{item.children?.map((child) => (
 							<li key={child.id}>
-								<FooterMenuChildLink child={child} />
+								<FooterMenuChildLink child={child} locale={locale} channel={channel} />
 							</li>
 						))}
 					</ul>

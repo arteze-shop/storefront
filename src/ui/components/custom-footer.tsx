@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { LinkWithChannel } from "@/ui/atoms/link-with-channel";
 import { StorefrontRegionPicker } from "./storefront-region-picker";
 import {
 	getStaticStorefrontChannelSlugs,
@@ -156,7 +155,7 @@ export async function CustomFooter({ locale, channel }: { locale: string; channe
 						)}
 					</div>
 
-					<FooterMenuColumns items={customFooterMenuItems} />
+					<FooterMenuColumns items={customFooterMenuItems} locale={locale} channel={channel} />
 
 					{/* Newsletter */}
 					<div>
@@ -173,12 +172,22 @@ export async function CustomFooter({ locale, channel }: { locale: string; channe
 						<CopyrightText />
 					</p>
 					<div className="mt-4 flex space-x-6 md:mt-0">
-						<LinkWithChannel href="/privacy" className="transition-colors hover:text-secondary">
+						{/* Deterministic server-rendered links: `LinkWithChannel` reads useParams(),
+						    which differs between prerender/resume passes and aborts boundary resume. */}
+						<Link
+							href={buildStorefrontPath(locale, channel, "/privacy")}
+							prefetch={false}
+							className="transition-colors hover:text-secondary"
+						>
 							Privacy Policy
-						</LinkWithChannel>
-						<LinkWithChannel href="/terms" className="transition-colors hover:text-secondary">
+						</Link>
+						<Link
+							href={buildStorefrontPath(locale, channel, "/terms")}
+							prefetch={false}
+							className="transition-colors hover:text-secondary"
+						>
 							Terms of Service
-						</LinkWithChannel>
+						</Link>
 					</div>
 				</div>
 			</div>
