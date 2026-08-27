@@ -1,10 +1,25 @@
 import { NextRequest } from "next/server";
 import { newsletterFormSchema } from "@/lib/schemas";
 import { sendEmail, createContact, getContact, addContactToSegment } from "@/lib/emails";
+import { validateTurnstile } from "@/lib/turnstile";
 
 export async function POST(request: NextRequest) {
 	try {
-		const body = await request.json();
+		const body = (await request.json()) as any;
+		const token = body["cf-turnstile-response"];
+		const ip =
+			request.headers.get("CF-Connecting-IP") ||
+			request.headers.get("X-Forwarded-For")?.split(",")[0]?.trim() ||
+			"unknown";
+
+		const validation = await validateTurnstile(token || null, ip);
+		if (!validation.success) {
+			return Response.json(
+				{ error: "Turnstile verification failed", details: validation["error-codes"] },
+				{ status: 400 },
+			);
+		}
+
 		const parsed = newsletterFormSchema.safeParse(body);
 
 		if (!parsed.success) {

@@ -6,6 +6,7 @@ import { contactFormSchema, type ContactFormData } from "@/lib/schemas";
 import { Button } from "@/ui/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { TurnstileWidget } from "@/ui/components/turnstile-widget";
 
 interface ContactFormProps {
 	onSuccess: () => void;
@@ -13,6 +14,7 @@ interface ContactFormProps {
 
 export function ContactForm({ onSuccess }: ContactFormProps) {
 	const [submitError, setSubmitError] = useState<string | null>(null);
+	const [turnstileToken, setTurnstileToken] = useState("");
 
 	const {
 		register,
@@ -29,7 +31,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
 			const res = await fetch("/api/form/contact", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(data),
+				body: JSON.stringify({ ...data, "cf-turnstile-response": turnstileToken }),
 			});
 
 			if (!res.ok) {
@@ -111,6 +113,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
 				{errors.message && <p className="mt-1 text-xs text-red-500">{errors.message.message}</p>}
 			</div>
 			{submitError && <p className="text-sm text-red-500">{submitError}</p>}
+			<TurnstileWidget onToken={setTurnstileToken} action="contact" />
 			<Button
 				type="submit"
 				disabled={isSubmitting}

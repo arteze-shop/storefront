@@ -4,14 +4,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { newsletterFormSchema, type NewsletterFormData } from "@/lib/schemas";
 import { ArrowRight, Loader, Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { TurnstileWidget } from "@/ui/components/turnstile-widget";
 
 interface NewsletterFormProps {
 	onSuccess?: () => void;
 }
 
 export function NewsletterForm({}: NewsletterFormProps) {
+	const formRef = useRef<HTMLFormElement>(null);
 	const [submitError, setSubmitError] = useState<string | null>(null);
+	const [turnstileToken, setTurnstileToken] = useState("");
 
 	const {
 		register,
@@ -28,7 +31,7 @@ export function NewsletterForm({}: NewsletterFormProps) {
 			const res = await fetch("/api/form/newsletter", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(data),
+				body: JSON.stringify({ ...data, "cf-turnstile-response": turnstileToken }),
 			});
 
 			if (!res.ok) {
@@ -41,7 +44,7 @@ export function NewsletterForm({}: NewsletterFormProps) {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="flex" noValidate>
+		<form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="flex" noValidate>
 			<input
 				id="email"
 				type="email"
@@ -64,6 +67,7 @@ export function NewsletterForm({}: NewsletterFormProps) {
 					<ArrowRight className="h-5 w-5" />
 				)}
 			</button>
+			<TurnstileWidget onToken={setTurnstileToken} action="newsletter" />
 		</form>
 	);
 }
