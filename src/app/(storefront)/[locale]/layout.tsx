@@ -53,6 +53,8 @@ export default async function LocaleRootLayout({
 	return (
 		<html {...htmlProps}>
 			<body className="min-h-dvh font-epilogue">
+				<link rel="preconnect" href="https://challenges.cloudflare.com" />
+				<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer />
 				<NextIntlClientProvider locale={localeSlug} messages={messages}>
 					<PersistBrowseLocaleCookie locale={localeSlug} />
 					{children}
