@@ -88,6 +88,21 @@ export function PrivacyPolicy() {
 					</p>
 				</LegalSection>
 
+				<LegalSection title="Form Security">
+					<p>
+						We use Cloudflare Turnstile (invisible mode) on our newsletter signup and contact forms to help
+						prevent spam and automated abuse. This service may process certain device and network information
+						as described in the{" "}
+						<a
+							href="https://www.cloudflare.com/en-gb/turnstile-privacy-policy/"
+							className="text-brand-coral hover:underline"
+						>
+							Turnstile Privacy Addendum
+						</a>
+						.
+					</p>
+				</LegalSection>
+
 				<LegalSection title="Data Retention & Your Rights">
 					<p>
 						We keep order records for as long as required for tax and accounting purposes, and account data
