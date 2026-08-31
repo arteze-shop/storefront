@@ -1,12 +1,18 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { isPaymentCompletingOrphaned } from "@/checkout/lib/payment/checkout-payment-completion";
 import { useCheckoutSession } from "@/checkout/providers/checkout-session";
 import { useCheckoutPaymentReturnError } from "@/checkout/providers/checkout-payment-return-error";
 import { useZiinaReturnCompletion } from "./use-ziina-return-completion";
 
 function ZiinaReturnCompletion({ checkoutId }: { checkoutId: string }) {
-	const { setError } = useCheckoutPaymentReturnError();
+	const { setError, clearError } = useCheckoutPaymentReturnError();
+
+	useEffect(() => {
+		clearError();
+	}, [clearError]);
 
 	useZiinaReturnCompletion({
 		checkoutId,
