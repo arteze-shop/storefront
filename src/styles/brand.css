@@ -32,6 +32,8 @@
 	--popover: 1 0 0;
 	/* --secondary: 0.965 0 0; Soft grey panels (hero/editorial image tiles) */
 	--secondary: 0.951 0.0609 105.48; /* Soft grey panels (hero/editorial image tiles) */
+	--secondary-blue: 0.7155 0.0826 257.9;
+	--secondary-yellow: 0.8386 0.0973 102.41;
 	/* --muted: 0.95 0 0; */
 	--muted: 0.9528 0.0209 88.72;
 	/* --accent: 0.95 0 0; */

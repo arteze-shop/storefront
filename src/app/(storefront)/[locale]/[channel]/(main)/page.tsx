@@ -121,7 +121,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 				secondaryCta={{ label: hero.secondaryCtaLabel as string, href: "/about" }}
 			/>
 
-			<section className="border-y border-border bg-secondary">
+			<section className="border-y border-border bg-secondary-yellow">
 				<div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
 					<div className="grid grid-cols-2 gap-6 md:grid-cols-4">
 						{valueColumns.map((v) => (
