@@ -60,7 +60,7 @@ export const defaultStorefrontContent = {
 					"Every rug, throw, and cushion cover at arteze is crafted by skilled artisans using traditional techniques and natural materials. Built to last. Made to love.",
 				primaryCtaLabel: "Shop the Collection",
 				secondaryCtaLabel: "Our Story",
-				backgroundImage: "/hero-image.webp",
+				backgroundImage: "/hero-image.avif",
 			},
 			featuredCollection: {
 				eyebrow: "Featured",

@@ -54,7 +54,7 @@ export function CustomHero({
 	return (
 		<section className="relative flex min-h-[88vh] items-center overflow-hidden" aria-labelledby={id}>
 			{/* Pattern right-side panel */}
-			<div
+			{/* <div
 				className="absolute bottom-0 right-0 top-0 w-full md:w-[48%]"
 				style={{
 					backgroundImage: `url(/brand-pattern-02.svg)`,
@@ -71,7 +71,7 @@ export function CustomHero({
 					backgroundPosition: "center",
 					opacity: 0.55,
 				}}
-			/>
+			/> */}
 			{/* Overlay on pattern side */}
 			<div
 				className="absolute bottom-0 right-0 top-0 hidden w-[48%] md:block"
