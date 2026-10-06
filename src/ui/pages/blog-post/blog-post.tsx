@@ -70,7 +70,7 @@ export function BlogPost({ post, relatedPosts, locale, channel }: BlogPostProps)
 						<h1 className="mb-6 font-fraunces text-3xl leading-tight text-foreground md:text-5xl">
 							{post.title}
 						</h1>
-						{post.author && <p className="font-light italic text-foreground/60">Words by {post.author}</p>}
+						{/* {post.author && <p className="font-light italic text-foreground/60">Words by {post.author}</p>} */}
 					</div>
 
 					{post.body && (
