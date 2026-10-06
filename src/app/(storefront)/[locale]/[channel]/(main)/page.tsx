@@ -121,7 +121,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 				secondaryCta={{ label: hero.secondaryCtaLabel as string, href: "/about" }}
 			/>
 
-			<section className="border-y border-border bg-secondary-yellow">
+			<section className="border-y border-border bg-secondary-foreground">
 				<div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
 					<div className="grid grid-cols-2 gap-6 md:grid-cols-4">
 						{valueColumns.map((v) => (
@@ -132,8 +132,8 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 									</div>
 								) : null}
 								<div>
-									<p className="text-sm font-semibold text-foreground">{v.title}</p>
-									<p className="mt-0.5 text-xs leading-snug text-muted-foreground">{v.text}</p>
+									<p className="text-sm font-semibold text-muted">{v.title}</p>
+									<p className="mt-0.5 text-xs leading-snug text-muted/80">{v.text}</p>
 								</div>
 							</div>
 						))}

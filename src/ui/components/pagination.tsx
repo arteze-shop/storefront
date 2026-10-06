@@ -34,7 +34,7 @@ export function Pagination({
 	const isNextDisabled = !pageInfo.hasNextPage;
 
 	const disabledLinkClassName = cn(
-		"rounded-md border border-border px-4 py-2 text-sm font-medium text-muted-foreground",
+		"rounded-md border border-border border-muted-foreground/50 px-4 py-2 text-sm font-medium text-muted-foreground/50",
 		ariaDisabledClassName,
 	);
 

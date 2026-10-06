@@ -69,11 +69,7 @@ export function ContactPage({ phone, address }: ContactProps) {
 						<div>
 							<h3 className="mb-4 font-fraunces text-xl text-secondary-foreground">Trade & Wholesale</h3>
 							<p className="text-sm font-light leading-relaxed text-secondary-foreground/80">
-								We work with interior designers and select boutiques. Please email{" "}
-								<a href="mailto:info@arteze.shop" className="text-primary hover:underline">
-									info@arteze.shop
-								</a>{" "}
-								with your inquiry.
+								We work with interior designers and select boutiques. Please email us with your inquiries.
 							</p>
 						</div>
 					</div>

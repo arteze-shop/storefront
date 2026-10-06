@@ -195,11 +195,11 @@ export const defaultStorefrontContent = {
 		},
 		contact: {
 			default: {
-				phone: "+973 3451 4543",
+				phone: "+973 3674 4277",
 				address: "Block 711 Tubli, Bahrain",
 			},
 			bh: {
-				phone: "+973 3451 4543",
+				phone: "+973 3674 4277",
 				address: "Block 711 Tubli,\nBahrain",
 			},
 			ae: {

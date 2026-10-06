@@ -51,7 +51,7 @@ function ChannelLink({
 }
 
 function FooterMenuChildLink({ child, locale, channel }: FooterMenuLinksProps & { child: MenuItem }) {
-	const linkClassName = "text-sm text-inverse-subtle transition-colors hover:text-secondary";
+	const linkClassName = "text-sm text-secondary/80 font-light transition-colors hover:text-secondary";
 	if (child.category) {
 		return (
 			<ChannelLink
@@ -142,7 +142,7 @@ export function FooterMenuColumns({ items, locale, channel }: FooterMenuLinksPro
 		<>
 			{items.map((item) => (
 				<div key={item.id}>
-					<h4 className="mb-4 font-fraunces text-xl font-medium text-inverse">{item.name}</h4>
+					<h4 className="mb-4 font-fraunces text-xl font-medium text-secondary">{item.name}</h4>
 					<ul className="space-y-2">
 						{item.children?.map((child) => (
 							<li key={child.id}>
