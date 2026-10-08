@@ -96,8 +96,8 @@ export function TermsOfService({ currencyCode }: TermsOfServiceProps) {
 				<LegalSection title="Contact">
 					<p>
 						Questions about these terms can be sent to{" "}
-						<a href="mailto:info@arteze.shop" className="text-primary hover:underline">
-							info@arteze.shop
+						<a href="mailto:hello@arteze.shop" className="text-primary hover:underline">
+							hello@arteze.shop
 						</a>
 						.
 					</p>

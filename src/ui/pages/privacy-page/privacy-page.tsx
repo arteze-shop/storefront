@@ -111,8 +111,8 @@ export function PrivacyPolicy() {
 					</p>
 					<p>
 						To make a request, email{" "}
-						<a href="mailto:info@arteze.shop" className="text-brand-coral hover:underline">
-							info@arteze.shop
+						<a href="mailto:hello@arteze.shop" className="text-brand-coral hover:underline">
+							hello@arteze.shop
 						</a>{" "}
 						and we will respond within 30 days.
 					</p>

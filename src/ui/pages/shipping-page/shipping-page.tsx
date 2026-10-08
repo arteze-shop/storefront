@@ -165,7 +165,7 @@ export function ShippingReturns({
 						<ol className="list-decimal space-y-2 pl-5 marker:text-primary">
 							<li>
 								Email{" "}
-								<a href="mailto:info@arteze.shop" className="text-primary hover:underline">
+								<a href="mailto:hello@arteze.shop" className="text-primary hover:underline">
 									hello@arteze.shop
 								</a>{" "}
 								with your order number and the item you&apos;d like to send back.
@@ -204,7 +204,7 @@ export function ShippingReturns({
 						<p>
 							Please inspect your order on arrival. If anything is damaged in transit or you&apos;ve received
 							the wrong item, email{" "}
-							<a href="mailto:returns@arteze.shop" className="text-brand-coral hover:underline">
+							<a href="mailto:hello@arteze.shop" className="text-brand-coral hover:underline">
 								hello@arteze.shop
 							</a>{" "}
 							with photographs within 7 days and we will arrange a replacement or refund at no cost to you.

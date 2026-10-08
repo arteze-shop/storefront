@@ -90,7 +90,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
 			{
 				question: "Do you work with interior designers or stockists?",
 				answer:
-					"Yes, we are interior designers ourselves and work with a small number of select boutiques. Email info@arteze.shop with your inquiry and we will send our trade terms and lookbook.",
+					"Yes, we are interior designers ourselves and work with a small number of select boutiques. Email hello@arteze.shop with your inquiry and we will send our trade terms and lookbook.",
 			},
 		],
 	},
