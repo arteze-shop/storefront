@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { PDP_MAIN_IMAGE_SIZES, PRODUCT_IMAGE_QUALITY } from "@/lib/images";
 import { NavHrefLink } from "@/ui/atoms/nav-href-link";
 import { buttonClassName } from "@/ui/components/ui/button";
 import { getStorefrontContent } from "@/lib/content/server";
@@ -30,7 +32,15 @@ export default async function AboutPage({
 			<div className="relative flex h-[60vh] min-h-[400px] items-center justify-center overflow-hidden">
 				<div className="absolute inset-0">
 					{hero.image ? (
-						<img src={hero.image} alt="Artisan weaving" className="h-full w-full object-cover" />
+						<Image
+							src={hero.image}
+							alt={"about us"}
+							fill
+							className="h-full w-full object-cover brightness-[0.85]"
+							sizes={PDP_MAIN_IMAGE_SIZES}
+							quality={PRODUCT_IMAGE_QUALITY}
+							priority
+						/>
 					) : null}
 					<div className="absolute inset-0 bg-primary/30 mix-blend-multiply" />
 				</div>
@@ -62,10 +72,14 @@ export default async function AboutPage({
 						<div className="relative aspect-square bg-secondary p-4">
 							<div className="pattern-overlay-light absolute inset-0 opacity-30" />
 							{vision.image ? (
-								<img
+								<Image
 									src={vision.image}
-									alt={vision.imageAlt}
+									alt={vision.imageAlt ?? "vision"}
 									className="relative z-10 h-full w-full object-cover shadow-lg"
+									width={800}
+									height={530}
+									quality={PRODUCT_IMAGE_QUALITY}
+									preload
 								/>
 							) : null}
 						</div>

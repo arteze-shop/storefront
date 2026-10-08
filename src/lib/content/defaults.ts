@@ -112,8 +112,7 @@ export const defaultStorefrontContent = {
 		},
 		aboutpage: {
 			hero: {
-				image:
-					"https://images.unsplash.com/photo-1600166898405-da9535204843?auto=format&fit=crop&q=80&w=2000",
+				image: "/about-hero.avif",
 				heading: "Our Story",
 				subheading: "Connecting modern homes with ancient craft traditions.",
 			},
@@ -124,7 +123,7 @@ export const defaultStorefrontContent = {
 					"Arteze was born from a simple realization: the most beautiful objects in our homes are the ones with a story. In a world dominated by mass production, we felt a deep need to return to the human hand.",
 					"We do not own factories. Instead, we travel the globe—focusing heavily on the rich textile and ceramic traditions of India—to partner directly with independent artisans, family-run workshops, and craft cooperatives.",
 				],
-				image: "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&q=80&w=800",
+				image: "/about-vision.avif",
 				imageAlt: "Hands working",
 			},
 			values: [
